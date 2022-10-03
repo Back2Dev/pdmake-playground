@@ -2,7 +2,9 @@ import React from 'react'
 
 const Mainbody = () => {
   return (
-    <div>Mainbody</div>
+    <div>
+      body
+    </div>
   )
 }
 

@@ -1,0 +1,42 @@
+body {
+	color: #666;
+	background: white !important;
+}
+
+.header {
+	background-color: white;
+  top: 0;
+  position: fixed;
+  width: 100%;
+}
+
+.header_logo {
+  padding: 15px;
+}
+
+.header_logo a {
+  color: #0074c1;
+  padding-left: 30px;
+  font-size: 1.2rem;
+}
+
+.header_logo a:hover {
+  color: #0074c1;
+}
+
+.navbar {
+  background-color: #0074c1;
+  color: white;
+  padding: 5px;
+  padding-left: 45px;
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: 550;
+}
+
+.footer{
+  font-size: 0.6rem;
+  position: fixed;
+  bottom: 0;
+  right: 10px;
+}
