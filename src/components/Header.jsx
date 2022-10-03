@@ -1,12 +1,12 @@
 import React from "react";
 import {Box} from "@mui/material";
-import {AppBar, Toolbar, Typography, IconButton, Menu, MenuItem, Button, Tooltip, Avatar} from "@mui/material";
+import {AppBar, Toolbar, Typography, IconButton, Menu, MenuItem, Button, Tooltip} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import FileOpenIcon from '@mui/icons-material/FileOpen';
 import {Link} from "react-router-dom";
 
 
-const pages = ["New","List"];
+const pages = ["New"];
 
 const files = ["File 1", "File 2", "File 3", "File 4"];
 
@@ -18,10 +18,10 @@ const Header = () => {
 
   const handleOpenfile = (event) => {
     setAnchorfile(event.currentTarget);
-    
   };
 
-  const handleClosefile = () => {
+  const handleClosefile = (event) => {
+    document.getElementById("filename").innerHTML = event.target.innerHTML;
     setAnchorfile(null);
   };
 
@@ -41,22 +41,20 @@ const Header = () => {
       <div className="header_logo">
         <a href="/">Back2dev</a>
       </div>
-      <Box sx={{flexGrow: 1, marginBottom: 3}}>
+      <Box sx={{flexGrow: 1}}>
         <AppBar position="static">
           <Toolbar disableGutters>
-            <Typography noWrap component="div" sx={{mr:2, display: {xs: "none", md: "flex"}}}>
-
-            </Typography>
-
-            <Box sx={{ flexGrow: 0 }}>
-              <Button
-                  size="large"
-                  onClick={handleOpenfile}
-                  color="inherit"
-                  variant="text"
-                >
-                <FileOpenIcon />
-              </Button>
+            <Box sx={{ flexGrow: 0 }} ml="15px">
+              <Tooltip title="Open File">
+                <Button
+                    size="large"
+                    onClick={handleOpenfile}
+                    color="inherit"
+                    variant="text"
+                  >
+                  <FileOpenIcon />
+                </Button>
+              </Tooltip>
               <Menu
                 sx={{ mt: '45px' }}
                 id="menu-appbar"
@@ -129,8 +127,9 @@ const Header = () => {
                   {page}
                 </Button>
               ))}
-          </Box>
-          <Box>
+            </Box>
+          <Box mr='15px' id="filename" fontWeight="bold">
+            File name
           </Box>
           </Toolbar>
         </AppBar>
