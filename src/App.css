@@ -8,6 +8,7 @@ body {
   top: 0;
   position: fixed;
   width: 100%;
+  margin-bottom:2rem;
 }
 
 .header_logo {
@@ -30,4 +31,14 @@ body {
   position: fixed;
   bottom: 0;
   right: 10px;
+}
+.main-area{
+    margin-top:2.5rem;
+}
+
+.theme-selector{
+    position:fixed;
+    bottom:5;
+    left:10px;
+    
 }
