@@ -4,7 +4,7 @@ import React,{ useState } from 'react';
 import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 import { xcodeLight, xcodeDark } from '@uiw/codemirror-theme-xcode';
 import { basicSetup, minimalSetup } from '@uiw/codemirror-extensions-basic-setup';
-// import pdfMake from "pdfmake";
+import pdfMake from "pdfmake";
 // // import pdfFonts from "pdfmake/build/vfs_fonts";
 // // pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -31,7 +31,7 @@ function TextEditor() {
   const onInputChange = (value) => {
     setText(value);
     setDoc(value)
-    // const pdfDocGenerator = pdfMake.createPdf(doc);
+    const pdfDocGenerator = pdfMake.createPdf(doc);
   }
   return (
   <>
