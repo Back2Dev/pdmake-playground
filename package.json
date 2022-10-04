@@ -21,9 +21,10 @@
     "@mui/material": "^5.10.7",
     "@uiw/codemirror-theme-okaidia": "^4.12.3",
     "@uiw/react-codemirror": "^4.12.3",
+    "pdf-lib": "^1.17.1",
+    "pdfmake": "^0.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-pdfmake": "^0.3.0",
     "react-router-dom": "^6.4.1"
   },
   "devDependencies": {

@@ -1,16 +1,28 @@
 import React from 'react';
-import { Box, Grid,  } from '@mui/material';
+import { Box, Grid, Button } from '@mui/material';
 import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import { okaidia } from '@uiw/codemirror-theme-okaidia';
 import { historyField } from '@codemirror/commands';
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 
 const stateFields = { history: historyField };
 
+// chlick the button to fomat to PDF
+const clickFormatButton = () => {
+  const value = localStorage.getItem('myValue') || '';
+  const docDefinition = 'docDefinition={'+value+'}';
+  document.getElementById("pdfView").innerHTML = docDefinition;  
+}
+
 const Mainbody = () => {
   const serializedState = localStorage.getItem('myEditorState');
   const value = localStorage.getItem('myValue') || '';
+  const docDefinition = 'docDefinition={'+value+'}';
+
 
   return (
     <>
@@ -40,14 +52,18 @@ const Mainbody = () => {
           </Box>
         </Grid>
         <Grid item sm={12} md={6}>
-          <Box sx={{ maxHeight:"90vh", minHeight: '90vh', padding:'10px'}}>
-            {value}
+          <Box id="pdfView" sx={{ maxHeight:"90vh", minHeight: '90vh', padding:'10px'}}>
+            {docDefinition}
           </Box>
         </Grid>  
       </Grid>
-        
+      <Button onClick={clickFormatButton}>
+        Format
+      </Button>
     </>
   )
 }
+
+
 
 export default Mainbody
