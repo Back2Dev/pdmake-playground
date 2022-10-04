@@ -9,14 +9,21 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@codemirror/commands": "^6.1.1",
+    "@codemirror/lang-javascript": "^6.1.0",
+    "@codemirror/state": "^6.1.2",
+    "@codemirror/view": "^6.3.0",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@fontsource/roboto": "^4.5.8",
     "@mui/icons-material": "^5.10.6",
     "@mui/lab": "^5.0.0-alpha.101",
     "@mui/material": "^5.10.7",
+    "@uiw/codemirror-theme-okaidia": "^4.12.3",
+    "@uiw/react-codemirror": "^4.12.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-pdfmake": "^0.3.0",
     "react-router-dom": "^6.4.1"
   },
   "devDependencies": {
