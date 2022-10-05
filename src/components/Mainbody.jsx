@@ -14,8 +14,12 @@ const stateFields = { history: historyField };
 // chlick the button to fomat to PDF
 const clickFormatButton = () => {
   const value = localStorage.getItem('myValue') || '';
-  const docDefinition = 'docDefinition={'+value+'}';
-  document.getElementById("pdfView").innerHTML = docDefinition;  
+  const docDefinition = ('{'+value+'}').replace(/'/g, `"`).replace(/([{,]\s*)(\S+)\s*(:)/mg, '$1"$2"$3');
+  const pdfDocGenerator = pdfMake.createPdf(JSON.parse(docDefinition));
+  pdfDocGenerator.getDataUrl((dataUrl) => {
+    const targetElement = document.getElementById("pdfView");
+    targetElement.innerHTML = `<iframe src="${dataUrl}" style="width: 100%; height: 650px; border: none;"></iframe>`;
+  });
 }
 
 const Mainbody = () => {
@@ -26,7 +30,7 @@ const Mainbody = () => {
 
   return (
     <>
-      <Grid container spacing={0} sx ={{width:'100vw', marginTop:"12vh"}}>
+      <Grid container spacing={0} sx ={{width:'100vw', marginTop:"16vh"}}>
         <Grid item sm={12} md={6}>
           <Box sx={{ maxHeight:"90vh", minHeight: '90vh'}}>
             <CodeMirror
@@ -42,7 +46,7 @@ const Mainbody = () => {
               }
               onChange={(value, viewUpdate) => {
                 localStorage.setItem('myValue', value);
-
+                clickFormatButton();
                 const state = viewUpdate.state.toJSON(stateFields);
                 localStorage.setItem('myEditorState', JSON.stringify(state))
               }}
@@ -53,7 +57,6 @@ const Mainbody = () => {
         </Grid>
         <Grid item sm={12} md={6}>
           <Box id="pdfView" sx={{ maxHeight:"90vh", minHeight: '90vh', padding:'10px'}}>
-            {docDefinition}
           </Box>
         </Grid>  
       </Grid>
