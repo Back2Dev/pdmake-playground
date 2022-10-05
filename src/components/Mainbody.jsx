@@ -1,11 +1,10 @@
 import React from 'react';
-import { Box } from '@mui/material';
-import MainArea from './MainArea';
+import CodeEditor from './CodeEditor';
 
 const Mainbody = () => {
   return (
     <div>
-      <MainArea />
+      <CodeEditor />
     </div>
   )
 }
