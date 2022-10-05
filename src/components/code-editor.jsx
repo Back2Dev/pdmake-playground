@@ -30,8 +30,7 @@ const CodeEditor = () => {
       const keyFinderRegEX = /([{,]\s*)(\S+)\s*(:)/mg;
       const convertedJSONString = newDoc.replace(keyFinderRegEX, '$1"$2"$3').replaceAll("'", "\"");
       const parsedObj = JSON.parse(convertedJSONString);
-      console.log(parsedObj)
-      // localStorage.setItem(myValue = JSON.stringigy(parsedObj))
+      localStorage.setItem('myValue', JSON.stringify(parsedObj))
       return parsedObj;
     } catch (e) { 
       console.log('parsing error: ', e);
