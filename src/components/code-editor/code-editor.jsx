@@ -7,6 +7,7 @@ import Split from 'react-split'
 import pdfMake from "pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import './code-editor.css'
 
 import { styled } from '@mui/material/styles';
 
@@ -14,16 +15,6 @@ const CodeEditor = () => {
   
   const extentions = [javascript({ jsx: true })];
   const [theme, setTheme] = useState(xcodeDark);
-  const [width, setWidth] = useState("auto");
-  const [text, setText] = useState("var dd = {content: ['Hello world', 'Hello World!']}")
-  const selectTheme = (event) => {
-    if (event.target.value === 'dark') {
-      setTheme(xcodeDark);
-    }
-    else if (event.target.value === 'light') {
-      setTheme(xcodeLight);
-    }
-  }
   const convertDoc = (value) => {
     try {
       const newDoc = value.split('=')[1].trim();
@@ -36,8 +27,30 @@ const CodeEditor = () => {
       console.log('parsing error: ', e);
     }
   }
+  const [width, setWidth] = useState("auto");
+  let storedDoc
+  let storedValue
+  let storedData
+  // if (localStorage.getItem('myValue')) {
+  //   storedData =  JSON.parse(localStorage.getItem('myValue'))
+  //   storedValue = "var dd = " + JSON.stringify(storedData)
+  //   storedDoc = convertDoc(storedValue);
+  //   console.log(storedValue)
+  //   console.log(storedDoc)
+  //   console.log(storedData)
 
-  const [doc, setDoc] = useState(convertDoc(text));
+  // }
+  const [text, setText] = useState(storedValue || "var dd = {content: ['Hello world', 'Hello World!']}")
+  const selectTheme = (event) => {
+    if (event.target.value === 'dark') {
+      setTheme(xcodeDark);
+    }
+    else if (event.target.value === 'light') {
+      setTheme(xcodeLight);
+    }
+  }
+
+  const [doc, setDoc] = useState(storedDoc || convertDoc(text));
 
   
   const pdfConverter = (doc) => {
@@ -93,18 +106,27 @@ const CodeEditor = () => {
                 theme={theme}
               />
             </Box > 
-            <ToggleButtonGroup exclusive={true} className='MuiToggleButtonGroup-groupedHorizontal theme-selector'>
+            {/* <ToggleButtonGroup exclusive={true} className='MuiToggleButtonGroup-groupedHorizontal theme-selector'>
               <ToggleButton value="dark" onClick={selectTheme} aria-label="Dark-theme">Dark</ToggleButton>
               <ToggleButton value="light" onClick={selectTheme} aria-label="Light-theme">Light</ToggleButton>
-            </ToggleButtonGroup> 
+            </ToggleButtonGroup>  */}
           </Grid>
           <Grid item columns={1}>
             <Box sx={{ bgcolor: '#cccccc', height: '80vh', color: '#FFFFFF' }} id="iframeContainer">
               <iframe id="pdf-viewer" />
             </Box >
-            <Button onClick={handleUpdateClick}>Update PDF</Button>
+            <div>
+              <Button onClick={handleUpdateClick}   >Update PDF</Button>
+              <ToggleButtonGroup exclusive={true} className='MuiToggleButtonGroup-groupedHorizontal theme-selector'>
+                <ToggleButton value="dark" onClick={selectTheme} aria-label="Dark-theme">Dark</ToggleButton>
+                <ToggleButton value="light" onClick={selectTheme} aria-label="Light-theme">Light</ToggleButton>
+              </ToggleButtonGroup>
+            </div>
           </Grid>
-         </Split>
+        </Split>
+        {/* <p>
+          {console.log(localStorage.getItem('myValue'))}
+        </p> */}
        </Box>
      </Grid>
   )

@@ -3,7 +3,8 @@ import {Box} from "@mui/material";
 import {AppBar, Toolbar, Typography, IconButton, Menu, MenuItem, Button, Tooltip} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import FileOpenIcon from '@mui/icons-material/FileOpen';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import './header.css'
 
 
 const pages = ["New"];
