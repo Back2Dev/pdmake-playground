@@ -2,5 +2,31 @@
   font-size: 0.6rem;
   position: fixed;
   bottom: 0;
-  right: 10px;
+  height: auto;
+  width: 100vw;
+}
+
+.footer-right {
+  text-align: right;
+
+}
+
+.footer-left {
+  text-align: left;
+}
+
+.footer-center {
+  text-align: center;
+}
+
+.footer-small {
+  font-size: 0.6rem;
+}
+
+.footer-large {
+  font-size: 1.2rem;
+}
+
+.footer-medium {
+  font-size: 0.8rem;
 }
