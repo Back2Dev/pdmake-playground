@@ -1,12 +1,12 @@
 .main-area {
   /* margin-top: 2.5rem; */
 }
-
-.theme-selector {
-  position: fixed;
-  bottom: 5;
-  left: 10px;
-
+.cm-editor{
+  height:80vh;
+  border-top: 3.75rem solid #323639;
+  border-right: .25rem solid #323639;
+  border-left: .25rem solid #323639;
+  border-bottom:.25rem solid #323639;
 }
 
 .split {
