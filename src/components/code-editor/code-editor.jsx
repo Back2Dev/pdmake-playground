@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import { Box, ToggleButtonGroup, ToggleButton, Button, Grid } from '@mui/material';
@@ -8,6 +8,8 @@ import pdfMake from "pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import './code-editor.css'
+import ErrorBar from "../error-bar/error-bar";
+// import { debounce } from 'lodash'
 
 import { styled } from '@mui/material/styles';
 
@@ -15,32 +17,7 @@ const CodeEditor = () => {
   
   const extentions = [javascript({ jsx: true })];
   const [theme, setTheme] = useState(xcodeDark);
-  const convertDoc = (value) => {
-    try {
-      const newDoc = value.split('=')[1].trim();
-      const keyFinderRegEX = /([{,]\s*)(\S+)\s*(:)/mg;
-      const convertedJSONString = newDoc.replace(keyFinderRegEX, '$1"$2"$3').replaceAll("'", "\"");
-      const parsedObj = JSON.parse(convertedJSONString);
-      localStorage.setItem('myValue', JSON.stringify(parsedObj))
-      return parsedObj;
-    } catch (e) { 
-      console.log('parsing error: ', e);
-    }
-  }
-  const [width, setWidth] = useState("auto");
-  let storedDoc
-  let storedValue
-  let storedData
-  // if (localStorage.getItem('myValue')) {
-  //   storedData =  JSON.parse(localStorage.getItem('myValue'))
-  //   storedValue = "var dd = " + JSON.stringify(storedData)
-  //   storedDoc = convertDoc(storedValue);
-  //   console.log(storedValue)
-  //   console.log(storedDoc)
-  //   console.log(storedData)
-
-  // }
-  const [text, setText] = useState(storedValue || "var dd = {content: ['Hello world', 'Hello World!']}")
+  const [err,setErr] = useState("")
   const selectTheme = (event) => {
     if (event.target.value === 'dark') {
       setTheme(xcodeDark);
@@ -49,38 +26,48 @@ const CodeEditor = () => {
       setTheme(xcodeLight);
     }
   }
-
-  const [doc, setDoc] = useState(storedDoc || convertDoc(text));
-
+  const convertDoc = (value) => {
+    try {
+      const newDoc = value.split('=')[1].trim();
+      const keyFinderRegEX = /([{,]\s*)(\S+)\s*(:)/mg;
+      const convertedJSONString = newDoc.replace(keyFinderRegEX, '$1"$2"$3').replaceAll("'", "\"");
+      const parsedObj = JSON.parse(convertedJSONString);
+      localStorage.setItem('myValue', JSON.stringify(parsedObj))
+      
+      return parsedObj;
+    } catch (e) { 
+      // console.log("parsing error:", e)
+      setErr(`Error: ${e.message}`)
+    }
+  }
+  const [text, setText] = useState("var dd = {content: ['Hello world', 'Hello World!']}")
+    
+  const [doc, setDoc] = useState(convertDoc(text))
   
   const pdfConverter = (doc) => {
-    try {
-      const pdfDocGenerator = pdfMake.createPdf(doc);
-      pdfDocGenerator.getDataUrl((dataUrl) => {
-        const iframe = document.querySelector('#pdf-viewer');
-        iframe.src = dataUrl;
-      });
-    } catch (e) { 
-      console.log('pdf generation error: ', e);
+    if (doc) {
+      try {
+        const pdfDocGenerator = pdfMake.createPdf(doc);
+        pdfDocGenerator.getDataUrl((dataUrl) => {
+          const iframe = document.querySelector('#pdf-viewer');
+          iframe.src = dataUrl;
+        }
+        );
+      } catch (e) {
+        console.log("pdf rendering error:", e)
+        setErr(`error:${e.message}`)
+      }
     }
   }
 
   const [pdfData, setPdfData] = useState(pdfConverter(doc))
  
-  const onInputChange = (value) => {
-    setText(value);
-    setDoc(convertDoc(value));
-    const liveUpdate = (err, doc) => {
-      if (err) {
-        console.log('live update error: ',err)
-      } else {
-        setPdfData(pdfConverter(doc));
-      }
+  const handleInputChange = (value) => {
+    // setText(value);
+    if (err) {
+      setErr("")
     }
-  }
-
-  const handleUpdateClick = (e) => {
-    e.preventDefault();  
+    setDoc(convertDoc(value));
   }
   
   return (
@@ -88,35 +75,29 @@ const CodeEditor = () => {
        <Box width="100vw" >
          <Split className="split">
           <Grid item columns={1}>
-            <Box sx={{ bgcolor: '#2a313e', height: '100%', color: '#ffffff' }} >
+            <Box sx={{ bgcolor: '#2a313e',height:'10vh', color: '#ffffff' }} >
               <CodeMirror
                 value={text}
                 extensions={extentions}
-                max-height='80vh'
-                width={width}
+                width='auto'
                 color='#2A313E'
-                placeholder="please add JavaScript code..."
+                placeholder="your code needs to be in var dd = {content: ''} format"
                 basicSetup={{
-                  dropCursor: false,
                   allowMultipleSelections: false,
-                  indentOnInput: false,
-                  lintKeymap: true,
+                  indentOnInput: true
                 }}
-                onChange={onInputChange}
+                onChange={handleInputChange}
                 theme={theme}
               />
+              <ErrorBar errorMessage={err} />
             </Box > 
-            {/* <ToggleButtonGroup exclusive={true} className='MuiToggleButtonGroup-groupedHorizontal theme-selector'>
-              <ToggleButton value="dark" onClick={selectTheme} aria-label="Dark-theme">Dark</ToggleButton>
-              <ToggleButton value="light" onClick={selectTheme} aria-label="Light-theme">Light</ToggleButton>
-            </ToggleButtonGroup>  */}
           </Grid>
           <Grid item columns={1}>
             <Box sx={{ bgcolor: '#cccccc', height: '80vh', color: '#FFFFFF' }} id="iframeContainer">
               <iframe id="pdf-viewer" />
             </Box >
             <div>
-              <Button onClick={handleUpdateClick}   >Update PDF</Button>
+              <Button onClick={handleInputChange}>Update PDF</Button>
               <ToggleButtonGroup exclusive={true} className='MuiToggleButtonGroup-groupedHorizontal theme-selector'>
                 <ToggleButton value="dark" onClick={selectTheme} aria-label="Dark-theme">Dark</ToggleButton>
                 <ToggleButton value="light" onClick={selectTheme} aria-label="Light-theme">Light</ToggleButton>
@@ -124,9 +105,6 @@ const CodeEditor = () => {
             </div>
           </Grid>
         </Split>
-        {/* <p>
-          {console.log(localStorage.getItem('myValue'))}
-        </p> */}
        </Box>
      </Grid>
   )
