@@ -1,29 +1,24 @@
 # pdmake-playground
 
-## Install
+## Description:
+- PDMake - playground is an app-component that allows the user to view while creating pdf flies. It is dependent on PDFMake.
 
-Step1 - Copy code from the source repository
-```
-git clone https://github.com/Back2Dev/pdmake-playground.git
-```
+## Installation and usage Instructions:
+ - Clone this git repository to your local project directory with 
+  ```
+  git clone https://github.com/Back2Dev/pdmake-playground.git
+  ```
 
-Step2 - Install node_modules
-```
-npm install
-```
-
-Step3 - Run the local application
-```
-npm run dev
-```
-
-Then you should have the local verison at http://127.0.0.1:5173/
-
-#### Storybook
-If you want check the storybook run
-```
-npm run storybook
-```
-Then you could check the stories under `PDMAKE`
-
-
+  - change to the pdmake-playground directory and install the required dependencies.
+  - Then run the project.
+  
+  ```
+   cd pdmake-playground
+   npm install
+   npm run dev
+   ```
+   - If you want to run the storybook use
+  
+  ```
+  npm run storybook
+  ```
