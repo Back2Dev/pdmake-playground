@@ -33,45 +33,30 @@ const CodeEditor = () => {
       const convertedJSONString = newDoc.replace(keyFinderRegEX, '$1"$2"$3').replaceAll("'", "\"");
       const parsedObj = JSON.parse(convertedJSONString);
       localStorage.setItem('myValue', JSON.stringify(parsedObj))
-      // setErr()
-      // console.log("reset error: '",err,"'")
+      
       return parsedObj;
     } catch (e) { 
       // console.log("parsing error:", e)
-      setErr(`error:${e}`)
-      console.log("error state: ", err)
+      setErr(`Error: ${e.message}`)
     }
   }
-  // useEffect = (() => {
+  const [text, setText] = useState("var dd = {content: ['Hello world', 'Hello World!']}")
     
-  // },)
-  let storedDoc
-  let storedValue
-  // let err
-  // let storedData
-  // if (localStorage.getItem('myValue')) {
-    //   storedData =  JSON.parse(localStorage.getItem('myValue'))
-    //   storedValue = "var dd = " + JSON.stringify(storedData)
-    //   storedDoc = convertDoc(storedValue);
-    //   console.log(storedValue)
-    //   console.log(storedDoc)
-    //   console.log(storedData)
-    
-    // }
-  const [text, setText] = useState(storedValue || "var dd = {content: ['Hello world', 'Hello World!']}")
-    
-  const [doc, setDoc] = useState(storedDoc || convertDoc(text))
+  const [doc, setDoc] = useState(convertDoc(text))
   
   const pdfConverter = (doc) => {
-    try {
-      const pdfDocGenerator = pdfMake.createPdf(doc);
-      pdfDocGenerator.getDataUrl((dataUrl) => {
-        const iframe = document.querySelector('#pdf-viewer');
-        iframe.src = dataUrl;
+    if (doc) {
+      try {
+        const pdfDocGenerator = pdfMake.createPdf(doc);
+        pdfDocGenerator.getDataUrl((dataUrl) => {
+          const iframe = document.querySelector('#pdf-viewer');
+          iframe.src = dataUrl;
+        }
+        );
+      } catch (e) {
+        console.log("pdf rendering error:", e)
+        setErr(`error:${e.message}`)
       }
-      );
-    } catch (e) { 
-      console.log(e)
     }
   }
 
@@ -79,19 +64,10 @@ const CodeEditor = () => {
  
   const handleInputChange = (value) => {
     // setText(value);
+    if (err) {
+      setErr("")
+    }
     setDoc(convertDoc(value));
-    // const liveUpdate = (doc) => {
-    //   // if (err) {
-    //   try {
-    //     setPdfData(pdfConverter(doc));
-    //   } catch (e) {
-    //       console.log('live update error: ',e)
-    //    }
-      //   console.log('live update error: ',err.message)
-      // } else {
-      //   setPdfData(pdfConverter(doc));
-      // }
-    // }
   }
   
   return (

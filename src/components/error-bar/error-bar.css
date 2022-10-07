@@ -2,7 +2,8 @@
   color:red;
   background-color: blanchedalmond;
   padding-left:2vw;
-  
+  height:fit-content;
+
 }
 .error-bar--none{
   display:none;
