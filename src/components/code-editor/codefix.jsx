@@ -54,8 +54,13 @@ const CodeEditor = () => {
               // clickFormatButton();
               // console.log(stringifyObject(value, { indent: '  ' }));
               // console.log(CodeMirror.getValue());
-              debugger;
-              console.log(eval(value));
+              let dd;
+              try {
+                dd = eval(value);
+              } catch (e) {
+                console.error(e);
+              }
+              console.log(value, dd);
               localStorage.setItem("myValue", value);
               const state = viewUpdate.state.toJSON(stateFields);
               localStorage.setItem("myEditorState", JSON.stringify(state));
