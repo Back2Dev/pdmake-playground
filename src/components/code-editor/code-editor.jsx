@@ -32,12 +32,9 @@ const CodeEditor = () => {
   }
   const convertDoc = (value) => {
     try {
-      const newDoc = value.split('=')[1].trim();
-      const keyFinderRegEX = /([{,]\s*)(\S+)\s*(:)/mg;
-      const convertedJSONString = newDoc.replace(/\[/g,"[ ").replace(/\{/g,"{ ").replaceAll("'", "\"").replace(keyFinderRegEX, '$1"$2"$3');
-      const parsedObj = JSON.parse(convertedJSONString);
+      let dd;
+      const parsedObj = eval(value.replace("var dd", 'dd'));
       localStorage.setItem('myValue', JSON.stringify(parsedObj))
-      
       return parsedObj;
     } catch (e) { 
       // console.log("parsing error:", e)
@@ -85,7 +82,7 @@ const CodeEditor = () => {
                 extensions={extentions}
                 width='auto'
                 color='#2A313E'
-                placeholder="your code needs to be in var dd = {content: ''} format"
+                placeholder="your code needs to be in dd = {content: ''} format"
                 basicSetup={{
                   allowMultipleSelections: false,
                   indentOnInput: true
