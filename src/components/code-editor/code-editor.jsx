@@ -89,16 +89,17 @@ const CodeEditor = () => {
                 }}
                 onChange={handleInputChange}
                 theme={theme}
+                data-cy="codemirror"
               />
-              <ErrorBar errorMessage={err} />
+              <ErrorBar data-cy="errorbar" errorMessage={err} />
             </Box > 
           </Grid>
           <Grid item columns={1}>
             <Box sx={{ bgcolor: '#cccccc', height: '80vh', color: '#FFFFFF' }} id="iframeContainer">
-              <iframe id="pdf-viewer" />
+              <div id="pdf-viewer" />
             </Box >
             <div>
-              <Button onClick={handleInputChange}>Update PDF</Button>
+              <Button data-cy="updatepdfbutton" onClick={handleInputChange}>Update PDF</Button>
               <ToggleButtonGroup exclusive={true} className='MuiToggleButtonGroup-groupedHorizontal theme-selector'>
                 <ToggleButton value="dark" onClick={selectTheme} aria-label="Dark-theme">Dark</ToggleButton>
                 <ToggleButton value="light" onClick={selectTheme} aria-label="Light-theme">Light</ToggleButton>

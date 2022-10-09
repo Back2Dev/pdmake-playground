@@ -1,6 +1,7 @@
 import * as fs from 'fs';
+import { CodeMirror } from '@uiw/react-codemirror';
 
-const samples = ['basics', 'styles1', 'styles2', 'styles3', 'columns', 'tables', 'lists', 'margin', 'images', 'svgs', 'attachments'];
+const samples = ['basics']//, 'styles1', 'styles2', 'styles3', 'columns', 'tables', 'lists', 'margin', 'images', 'svgs', 'attachments'];
 
 describe('Test sample',() => {
   beforeEach(() => {
@@ -11,7 +12,7 @@ describe('Test sample',() => {
     it(`Test sample ${sample}`, () => {
       let samplefile = cy.readFile(`./public/sample/${sample}`, 'utf8');
       cy.window().then((win) => {
-        win.editor.setValue(samplefile);
+        win.CodeMirror.setValue(samplefile);
       });
       // cy.get('[data-cy="codemirror"]').clear();
       cy.get('[data-cy="updatepdfbutton"]').click({force: true})
