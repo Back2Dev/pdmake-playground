@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
-import { Box, ToggleButtonGroup, ToggleButton, Button, Grid } from '@mui/material';
+import { Box, ToggleButtonGroup, ToggleButton, Button, Grid, TextField } from '@mui/material';
 import { xcodeLight, xcodeDark } from '@uiw/codemirror-theme-xcode';
 import Split from 'react-split'
 import pdfMake from "pdfmake";
@@ -18,6 +18,8 @@ import ErrorBar from "../error-bar/error-bar";
 import { styled } from '@mui/material/styles';
 
 const CodeEditor = () => {
+
+
   
   const extentions = [javascript({ jsx: true })];
   const [theme, setTheme] = useState(xcodeDark);
@@ -33,7 +35,7 @@ const CodeEditor = () => {
   const convertDoc = (value) => {
     try {
       let dd;
-      const parsedObj = eval(value.replace("var dd", 'dd'));
+      const parsedObj = eval(value);
       localStorage.setItem('myValue', JSON.stringify(parsedObj))
       return parsedObj;
     } catch (e) { 
@@ -41,7 +43,7 @@ const CodeEditor = () => {
       setErr(`Error: ${e.message}`)
     }
   }
-  const [text, setText] = useState("var dd = {content: ['Hello world', 'Hello World!']}")
+  const [text, setText] = useState("dd = {content: ['Hello world', 'Hello World!']}")
     
   const [doc, setDoc] = useState(convertDoc(text))
   
@@ -71,6 +73,13 @@ const CodeEditor = () => {
     setDoc(convertDoc(value));
   }
   
+  const ref = useRef(null);
+
+  const handleClick = event => {
+    handleInputChange(ref.current.value);
+  };
+
+
   return (
     <Grid container columns={12} className="main-area">
        <Box width="100vw" >
@@ -92,6 +101,8 @@ const CodeEditor = () => {
                 data-cy="codemirror"
               />
               <ErrorBar data-cy="errorbar" errorMessage={err} />
+              <textarea ref={ref} id="textarea" name="textarea" data-cy="typeinarea"/>
+              <button onClick={handleClick} data-cy="texttopdf">Click</button>
             </Box > 
           </Grid>
           <Grid item columns={1}>
