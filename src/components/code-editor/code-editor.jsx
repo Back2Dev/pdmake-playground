@@ -6,9 +6,17 @@ import { xcodeLight, xcodeDark } from '@uiw/codemirror-theme-xcode';
 import Split from 'react-split'
 import pdfMake from "pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-pdfMake.vfs = pdfFonts.pgdfMake.vfs;
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import './code-editor.css'
-import stringifyObject from 'stringify-object';
+
+function debounce(func, timeout = 300){
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => { func.apply(this, args); }, timeout);
+  };
+}
+
 
 
 
@@ -73,6 +81,8 @@ const CodeEditor = () => {
     setDoc(convertDoc(value));
   }
   
+  const handledelayedInputChange = debounce(handleInputChange, 1000);
+
   const ref = useRef(null);
 
   const handleClick = event => {
@@ -96,7 +106,7 @@ const CodeEditor = () => {
                   allowMultipleSelections: false,
                   indentOnInput: true
                 }}
-                onChange={handleInputChange}
+                onChange={handledelayedInputChange}
                 theme={theme}
                 data-cy="codemirror"
               />
