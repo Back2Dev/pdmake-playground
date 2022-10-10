@@ -1,7 +1,8 @@
 import React, { useState } from "react"
 import { Box, ToggleButtonGroup, ToggleButton, Button, Grid } from '@mui/material';
 import { xcodeLight, xcodeDark } from '@uiw/codemirror-theme-xcode';
-import Split from 'react-split'
+import Split from 'react-split';
+import { debounce } from "lodash";
 
 import CodeMirror from "@uiw/react-codemirror"
 import { javascript } from "@codemirror/lang-javascript"
@@ -16,35 +17,13 @@ import ErrorBar from "../error-bar/error-bar";
 
 const stateFields = { history: historyField }
 
-// click the button to fomat to PDF
-// const [err, setErr] = useState("")
-// const clickFormatButton = () => {
-//   if (err) {
-//     console.error(err);
-//     setErr(`Error: ${e.message}`)
-
-//   }
-//   const value = localStorage.getItem("myValue") || ""
-//   // const docDefinition = value.split('=')[1].replace(/'/g, `"`).replace(/([{,]\s*)(\S+)\s*(:)/mg, '$1"$2"$3');
-//   // const docDefinition = JSON.stringify(value.replace("var dd = ", ''), null, "\t");
-//   let dd = {}
-//   console.log(value)
-//   const docDefinition = eval(value)
-
-//   // console.log("docDefinition: ", docDefinition)
-//   const pdfDocGenerator = pdfMake.createPdf(docDefinition)
-//   pdfDocGenerator.getDataUrl((dataUrl) => {
-//     const targetElement = document.getElementById("pdfView")
-//     targetElement.src = dataUrl
-//   })
-// }
-
 const CodeEditor = () => {
   const serializedState = localStorage.getItem("myEditorState")
-  const value = localStorage.getItem("myValue") || ""
-
+  // const [value,setValue] = useState(localStorage.getItem("myValue") || "")
   const [err, setErr] = useState("")
   const [theme, setTheme] = useState(xcodeDark);
+  const value = localStorage.getItem("myValue") || ""
+
   const selectTheme = (event) => {
     if (event.target.value === 'dark') {
       setTheme(xcodeDark);
@@ -53,28 +32,41 @@ const CodeEditor = () => {
       setTheme(xcodeLight);
     }
   }
-  const clickFormatButton = () => {
+  let dd = {}
+  const formatData = () => {
     try {
       const value = localStorage.getItem("myValue") || ""
-      // const docDefinition = value.split('=')[1].replace(/'/g, `"`).replace(/([{,]\s*)(\S+)\s*(:)/mg, '$1"$2"$3');
-      // const docDefinition = JSON.stringify(value.replace("var dd = ", ''), null, "\t");
-      let dd = {}
-      // console.log(value)
+      console.log("value: ", value)
       const docDefinition = eval(value)
-
-      // console.log("docDefinition: ", docDefinition)
+      console.log("docDefinition: ", docDefinition)
       const pdfDocGenerator = pdfMake.createPdf(docDefinition)
       pdfDocGenerator.getDataUrl((dataUrl) => {
         const targetElement = document.getElementById("pdfView")
         targetElement.src = dataUrl
       })
     } catch (e) {
+      console.log("error message: ", e)
       setErr(`Error: ${e.message}`)
       setTimeout(() => {
         setErr("")
       }, 3000)
     }
   }
+
+  const handleChange = (value, viewUpdate) => {
+    localStorage.setItem("myValue", value.replace("var dd", 'dd'))
+    const state = viewUpdate.state.toJSON(stateFields)
+    localStorage.setItem("myEditorState", JSON.stringify(state))
+    formatData()
+  }
+
+  const debouncedOnChange = debounce(handleChange,1000)
+
+
+  const clickFormatButton = () => { 
+    formatData()
+  }
+
 
   return (
     <>
@@ -94,20 +86,7 @@ const CodeEditor = () => {
                       }
                       : undefined
                   }
-                  onChange={(value, viewUpdate) => {
-                    // clickFormatButton();
-                    // console.log(
-                    //   value
-                    //     .replace("var dd = ", "")
-                    //     .replace(/'/g, `"`)
-                    //     .replace(/\[/g, "[ ")
-                    //     .replace(/\{/g, "{ ")
-                    //     .replace(/([{,]\s*)(\S+)\s*(:)/gm, '$1"$2"$3')
-                    // )
-                    localStorage.setItem("myValue", value.replace("var dd", 'dd'))
-                    const state = viewUpdate.state.toJSON(stateFields)
-                    localStorage.setItem("myEditorState", JSON.stringify(state))
-                  }}
+                  onChange = {debouncedOnChange}
                   extensions={[javascript({ jsx: true })]}
                   basicSetup={{
                     dropCursor: false,
