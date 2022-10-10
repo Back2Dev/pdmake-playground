@@ -6,7 +6,7 @@ import { xcodeLight, xcodeDark } from '@uiw/codemirror-theme-xcode';
 import Split from 'react-split'
 import pdfMake from "pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
+pdfMake.vfs = pdfFonts.pgdfMake.vfs;
 import './code-editor.css'
 import stringifyObject from 'stringify-object';
 

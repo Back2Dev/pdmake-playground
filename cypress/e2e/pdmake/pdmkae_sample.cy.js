@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import { CodeMirror } from '@uiw/react-codemirror';
 
-const samples = ['basics', 'attachments', 'columns', 'images', 'inline-styling', 'lists', 'margins', 'named-styles', 'style-overrides', 'svgs', 'tables'];
+const samples = ['basics', 'columns', 'inline-styling', 'lists', 'margins', 'named-styles', 'style-overrides', 'tables'];
 
 describe('Test sample',() => {
   beforeEach(() => {
