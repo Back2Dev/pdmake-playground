@@ -11,9 +11,11 @@ describe('Test sample',() => {
   samples.forEach((sample) => {
     it(`Test sample ${sample}`, () => {
       let samplefile = cy.readFile(`./public/sample/${sample}`, 'utf8');
-      cy.window().then((win) => {
-        win.CodeMirror.setValue(samplefile);
+
+      cy.get('[data-cy="codemirror"]').then((editor) => {
+        editor.CodeMirror.setValue(samplefile);
       });
+
       // cy.get('[data-cy="codemirror"]').clear();
       cy.get('[data-cy="updatepdfbutton"]').click({force: true})
       cy.get('[data-cy="errorbar"]').should('not.exist')

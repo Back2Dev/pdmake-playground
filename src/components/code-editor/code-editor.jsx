@@ -96,7 +96,7 @@ const CodeEditor = () => {
           </Grid>
           <Grid item columns={1}>
             <Box sx={{ bgcolor: '#cccccc', height: '80vh', color: '#FFFFFF' }} id="iframeContainer">
-              <div id="pdf-viewer" />
+              <iframe id="pdf-viewer" />
             </Box >
             <div>
               <Button data-cy="updatepdfbutton" onClick={handleInputChange}>Update PDF</Button>
