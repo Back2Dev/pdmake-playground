@@ -14,9 +14,21 @@ import MenuIcon from "@mui/icons-material/Menu";
 import FileOpenIcon from "@mui/icons-material/FileOpen";
 import { Link } from "react-router-dom";
 import "./header.css";
+import PdfOptions from "../pdf-options/pdf-options";
+import SampleFiles from "../sample-files/sample-file";
 import { globalStateContext } from "../context/provider";
 
-const pages = ["New"];
+const pages = [
+  "BASICS",
+  "STYLE1",
+  "STYLE2",
+  "STYLE3",
+  "COLUMNS",
+  "TABLES",
+  "LISTS",
+  "MARGIN",
+  "IMAGES",
+];
 
 const files = [
   "basics",
@@ -57,6 +69,8 @@ const Header = () => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+
+  const handleOpenSample = (event) => {};
 
   return (
     <div className="header">
@@ -131,10 +145,21 @@ const Header = () => {
                 }}
               >
                 {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <MenuItem
+                    key={page}
+                    onClick={handleOpenSample}
+                    value={page}
+                    sx={{
+                      my: 2,
+                      color: "white",
+                      fontWeight: "bold",
+                      fontSize: "0.65rem",
+                    }}
+                  >
                     <Typography textAlign="center">{page}</Typography>
                   </MenuItem>
                 ))}
+                {/* <SampleFiles /> */}
               </Menu>
             </Box>
 
@@ -150,8 +175,9 @@ const Header = () => {
                 </Button>
               ))}
             </Box>
-            <Box mr="15px" id="filenametag" fontWeight="bold">
-              {filenametag}
+            <PdfOptions />
+            <Box mr="15px" id="filename" fontWeight="bold">
+              File name
             </Box>
           </Toolbar>
         </AppBar>

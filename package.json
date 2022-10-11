@@ -12,6 +12,9 @@
     "cypress:open": "cypress open"
   },
   "dependencies": {
+    "@babel/parser": "^7.19.4",
+    "@babel/runtime": "^7.19.4",
+    "@codemirror/commands": "^6.1.1",
     "@codemirror/lang-javascript": "^6.1.0",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
@@ -23,8 +26,11 @@
     "@uiw/codemirror-theme-xcode": "^4.12.3",
     "@uiw/react-codemirror": "^4.12.3",
     "@uiw/react-textarea-code-editor": "^2.0.3",
+    "lodash": "^4.17.21",
+    "lodash.debounce": "^4.0.8",
     "pdf-lib": "^1.17.1",
     "pdfmake": "^0.2.5",
+    "prettier": "^2.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.2",

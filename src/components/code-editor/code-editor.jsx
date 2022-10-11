@@ -1,6 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
-import CodeMirror from "@uiw/react-codemirror";
-import { javascript } from "@codemirror/lang-javascript";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Box,
   ToggleButtonGroup,
@@ -11,30 +9,33 @@ import {
 } from "@mui/material";
 import { xcodeLight, xcodeDark } from "@uiw/codemirror-theme-xcode";
 import Split from "react-split";
-import pdfMake from "pdfmake";
+import { debounce } from "lodash";
+import prettier from "prettier/standalone";
+import babelParser from "prettier/parser-babel";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
+import CodeMirror from "@uiw/react-codemirror";
+import { javascript } from "@codemirror/lang-javascript";
+import { historyField } from "@codemirror/commands";
+import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 import "./code-editor.css";
-
-function debounce(func, timeout = 300) {
-  let timer;
-  return (...args) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      func.apply(this, args);
-    }, timeout);
-  };
-}
-
 import ErrorBar from "../error-bar/error-bar";
-// import { debounce } from 'lodash'
 
-import { styled } from "@mui/material/styles";
+const stateFields = { history: historyField };
 
-const CodeEditor = () => {
-  const extentions = [javascript({ jsx: true })];
-  const [theme, setTheme] = useState(xcodeDark);
+const CodeEditor = (props) => {
+  const serializedState = localStorage.getItem("myEditorState");
   const [err, setErr] = useState("");
+  const [theme, setTheme] = useState(xcodeDark);
+  const [value, setValue] = useState(
+    localStorage.getItem("myValue") || "dd = { content : ['Hello','World']} "
+  );
+  const [useCM, setUseCM] = useState(true);
+  const ref = useRef(null);
   const selectTheme = (event) => {
     if (event.target.value === "dark") {
       setTheme(xcodeDark);
@@ -42,123 +43,159 @@ const CodeEditor = () => {
       setTheme(xcodeLight);
     }
   };
-  const convertDoc = (value) => {
+  let dd = {};
+  const makePdf = () => {
     try {
-      let dd;
-      const parsedObj = eval(value);
-      localStorage.setItem("myValue", JSON.stringify(parsedObj));
-      return parsedObj;
+      const value =
+        localStorage.getItem("myValue") ||
+        "dd = { content : ['Hello','World']} ";
+      // console.log("value: ", value)
+      const docDefinition = eval(value);
+      // console.log("docDefinition: ", docDefinition)
+      const pdfDocGenerator = pdfMake.createPdf(docDefinition);
+      pdfDocGenerator.getDataUrl((dataUrl) => {
+        const targetElement = document.getElementById("pdfView");
+        targetElement.src = dataUrl;
+        setErr("");
+      });
     } catch (e) {
-      // console.log("parsing error:", e)
+      console.log("error message: ", e);
       setErr(`Error: ${e.message}`);
     }
   };
-  const [text, setText] = useState(
-    "dd = {content: ['First paragraph','Another paragraph, this time a little bit longer to make sure, this line will be divided into at least two lines']}"
-  );
-
-  const [doc, setDoc] = useState(convertDoc(text));
-
-  const pdfConverter = (doc) => {
-    if (doc) {
-      try {
-        const pdfDocGenerator = pdfMake.createPdf(doc);
-        pdfDocGenerator.getDataUrl((dataUrl) => {
-          const iframe = document.querySelector("#pdf-viewer");
-          iframe.src = dataUrl;
-        });
-      } catch (e) {
-        console.log("pdf rendering error:", e);
-        setErr(`error:${e.message}`);
-      }
-    }
+  useEffect(() => {
+    makePdf();
+  }, []);
+  const handleChange = (value, viewUpdate) => {
+    localStorage.setItem("myValue", value.replace("var dd", "dd"));
+    const state = viewUpdate.state.toJSON(stateFields);
+    localStorage.setItem("myEditorState", JSON.stringify(state));
+    makePdf();
   };
 
-  const [pdfData, setPdfData] = useState(pdfConverter(doc));
+  const debouncedOnChange = debounce(handleChange, 1000);
 
-  const handleInputChange = (value) => {
-    // setText(value);
-    if (err) {
-      setErr("");
-    }
-    setDoc(convertDoc(value));
+  const formatCode = () => {
+    const formatted = prettier.format(value, {
+      useTabs: false,
+      printWidth: 90,
+      tabWidth: 2,
+      singleQuote: true,
+      semi: false,
+      parser: "babel",
+      plugins: [babelParser],
+    });
+    console.log({ formatted });
+    setValue(formatted);
   };
 
-  const handledelayedInputChange = debounce(handleInputChange, 1000);
-
-  const ref = useRef(null);
-
-  const handleClick = (event) => {
-    handleInputChange(ref.current.value);
+  const toggleEditor = () => {
+    setUseCM(!useCM);
   };
 
   return (
-    <Grid container columns={12} className="main-area">
-      <Box width="100vw">
-        <Split className="split">
-          <Grid item columns={1}>
-            <Box sx={{ bgcolor: "#2a313e", height: "10vh", color: "#ffffff" }}>
-              <CodeMirror
-                value={text}
-                extensions={extentions}
-                width="auto"
-                color="#2A313E"
-                placeholder="your code needs to be in dd = {content: ''} format"
-                basicSetup={{
-                  allowMultipleSelections: false,
-                  indentOnInput: true,
-                }}
-                onChange={handledelayedInputChange}
-                theme={theme}
-                data-cy="codemirror"
-              />
-              <ErrorBar data-cy="errorbar" errorMessage={err} />
-              <textarea
-                ref={ref}
-                id="textarea"
-                name="textarea"
-                data-cy="typeinarea"
-              />
-              <button onClick={handleClick} data-cy="texttopdf">
-                Forma
-              </button>
-            </Box>
-          </Grid>
-          <Grid item columns={1}>
-            <Box
-              sx={{ bgcolor: "#cccccc", height: "80vh", color: "#FFFFFF" }}
-              id="iframeContainer"
-            >
-              <iframe id="pdf-viewer" />
-            </Box>
-            <div>
-              <Button data-cy="updatepdfbutton" onClick={handleInputChange}>
-                Update PDF
-              </Button>
-              <ToggleButtonGroup
-                exclusive={true}
-                className="MuiToggleButtonGroup-groupedHorizontal theme-selector"
+    <>
+      <Grid container columns={12} className="main-area">
+        <Box width="100vw">
+          <Split className="split">
+            <Grid item columns={1}>
+              <Box
+                sx={{ bgcolor: "#2a313e", height: "10vh", color: "#ffffff" }}
               >
-                <ToggleButton
-                  value="dark"
-                  onClick={selectTheme}
-                  aria-label="Dark-theme"
+                {useCM && (
+                  <CodeMirror
+                    value={value}
+                    height="80vh"
+                    initialState={
+                      serializedState
+                        ? {
+                            json: JSON.parse(serializedState || ""),
+                            fields: stateFields,
+                          }
+                        : undefined
+                    }
+                    onChange={debouncedOnChange}
+                    extensions={[javascript({ jsx: true })]}
+                    basicSetup={{
+                      dropCursor: false,
+                      allowMultipleSelections: false,
+                      indentOnInput: false,
+                      lintKeymap: true,
+                    }}
+                    theme={theme}
+                  />
+                )}
+                <ErrorBar errorMessage={err} data-cy="errorbar" />
+                {!useCM && (
+                  <textarea
+                    className="cm-editor"
+                    ref={ref}
+                    id="textarea"
+                    name="textarea"
+                    data-cy="typeinarea"
+                    style={{ width: "100%" }}
+                  >
+                    {value}
+                  </textarea>
+                )}
+                <FormGroup>
+                  <Button
+                    onClick={formatCode}
+                    data-cy="format"
+                    variant="outlined"
+                  >
+                    Format
+                  </Button>
+                  <FormControlLabel
+                    control={<Switch checked={useCM} />}
+                    onChange={toggleEditor}
+                    label="use Code Mirror"
+                  />
+                </FormGroup>{" "}
+              </Box>
+            </Grid>
+            <Grid item columns={1}>
+              <Box
+                sx={{ bgcolor: "#cccccc", height: "80vh", color: "#FFFFFF" }}
+                id="iframeContainer"
+              >
+                <iframe
+                  id="pdfView"
+                  src=""
+                  width="100%"
+                  height="100%"
+                  border="0"
+                ></iframe>
+              </Box>
+              <div>
+                <Button onClick={makePdf} data-cy="updatepdfbutton">
+                  Update PDF
+                </Button>
+                <ToggleButtonGroup
+                  exclusive={true}
+                  className="MuiToggleButtonGroup-groupedHorizontal theme-selector"
                 >
-                  Dark
-                </ToggleButton>
-                <ToggleButton
-                  value="light"
-                  onClick={selectTheme}
-                  aria-label="Light-theme"
-                >
-                  Light
-                </ToggleButton>
-              </ToggleButtonGroup>
-            </div>
-          </Grid>
-        </Split>
-      </Box>
-    </Grid>
+                  <ToggleButton
+                    value="dark"
+                    onClick={selectTheme}
+                    aria-label="Dark-theme"
+                  >
+                    Dark
+                  </ToggleButton>
+                  <ToggleButton
+                    value="light"
+                    onClick={selectTheme}
+                    aria-label="Light-theme"
+                  >
+                    Light
+                  </ToggleButton>
+                </ToggleButtonGroup>
+              </div>
+            </Grid>
+          </Split>
+        </Box>
+      </Grid>
+    </>
   );
 };
 
