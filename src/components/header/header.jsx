@@ -5,6 +5,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import FileOpenIcon from '@mui/icons-material/FileOpen';
 import { Link } from "react-router-dom";
 import './header.css'
+import { globalStateContext, dispatchStateContext } from "../context/provider";
+
 
 
 const pages = ["New"];
@@ -12,7 +14,7 @@ const pages = ["New"];
 const files = ['basics', 'columns', 'inline-styling', 'lists', 'margins', 'named-styles', 'style-overrides', 'tables'];
 
 const Header = () => {
-
+  const [state, dispatch] = [ React.useContext(globalStateContext), React.useContext(dispatchStateContext) ];
   // set the name of the opened file
   const [filenametag, setFilenametag] = React.useState("File Name");
 
@@ -24,6 +26,8 @@ const Header = () => {
 
   const handleClosefile = (event) => {
     setFilenametag(event.target.innerText);
+    dispatch({filename: event.target.innerText});
+    console.log(state.filename)
     setAnchorfile(null);
   };
 

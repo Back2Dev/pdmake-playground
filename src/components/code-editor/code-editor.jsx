@@ -15,7 +15,6 @@ import pdfMake from "pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import "./code-editor.css";
-import * as fs from "fs";
 
 function debounce(func, timeout = 300) {
   let timer;
@@ -31,7 +30,6 @@ import ErrorBar from "../error-bar/error-bar";
 // import { debounce } from 'lodash'
 
 import { styled } from "@mui/material/styles";
-
 
 const CodeEditor = () => {
   const extentions = [javascript({ jsx: true })];
@@ -55,7 +53,9 @@ const CodeEditor = () => {
       setErr(`Error: ${e.message}`);
     }
   };
-  const [text, setText] = useState("dd = {content: ['First paragraph','Another paragraph, this time a little bit longer to make sure, this line will be divided into at least two lines']}");
+  const [text, setText] = useState(
+    "dd = {content: ['First paragraph','Another paragraph, this time a little bit longer to make sure, this line will be divided into at least two lines']}"
+  );
 
   const [doc, setDoc] = useState(convertDoc(text));
 
@@ -120,7 +120,7 @@ const CodeEditor = () => {
                 data-cy="typeinarea"
               />
               <button onClick={handleClick} data-cy="texttopdf">
-                Click
+                Forma
               </button>
             </Box>
           </Grid>
