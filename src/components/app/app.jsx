@@ -1,13 +1,12 @@
-import { useState } from 'react'
-import React from "react"
-import './App.css'
-import Header from '../header/header'
-import CodeEditor from '../code-editor/code-editor'
-import Footer from '../footer/footer'
-import {GlobalStateProvider} from '../context/provider'
+import { useState } from "react";
+import React from "react";
+import "./App.css";
+import Header from "../header/header";
+import CodeEditor from "../code-editor/code-editor";
+import Footer from "../footer/footer";
+import { GlobalStateProvider } from "../context/provider";
 
 const App = () => {
-
   return (
     <>
       <GlobalStateProvider>
@@ -17,7 +16,7 @@ const App = () => {
 
       <Footer />
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;

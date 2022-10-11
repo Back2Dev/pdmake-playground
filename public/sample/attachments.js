@@ -1,4 +1,4 @@
-content: [
+export const attachments = {content: [
 	'pdfmake supports attaching files as annotations as well as embedded files.',
 	'Embedded files are added in the "files" dictionary and will show up in supported pdf viewers in their respective attachment panels.',
 	'File attachments are annotations which link to a file.',
@@ -54,4 +54,5 @@ files: {
 		src: 'https://raw.githubusercontent.com/bpampuch/pdfmake/master/README.md',
 		name: 'pdfmake README.md'
 	}
+}
 }

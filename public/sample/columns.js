@@ -1,4 +1,4 @@
-content: [
+export const columns = {content: [
 	'By default paragraphs are stacked one on top of (or actually - below) another. ',
 	'It\'s possible however to split any paragraph (or even the whole document) into columns.\n\n',
 	'Here we go with 2 star-sized columns, with justified text and gap set to 20:\n\n',
@@ -145,4 +145,5 @@ styles: {
 },
 defaultStyle: {
 	columnGap: 20
+}
 }

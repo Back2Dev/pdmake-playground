@@ -1,20 +1,36 @@
 import React from "react";
-import {Box} from "@mui/material";
-import {AppBar, Toolbar, Typography, IconButton, Menu, MenuItem, Button, Tooltip} from "@mui/material";
-import MenuIcon from '@mui/icons-material/Menu';
-import FileOpenIcon from '@mui/icons-material/FileOpen';
+import { Box } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Menu,
+  MenuItem,
+  Button,
+  Tooltip,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import FileOpenIcon from "@mui/icons-material/FileOpen";
 import { Link } from "react-router-dom";
-import './header.css'
-import { globalStateContext, dispatchStateContext } from "../context/provider";
-
-
+import "./header.css";
+import { globalStateContext } from "../context/provider";
 
 const pages = ["New"];
 
-const files = ['basics', 'columns', 'inline-styling', 'lists', 'margins', 'named-styles', 'style-overrides', 'tables'];
+const files = [
+  "basics",
+  "columns",
+  "inline-styling",
+  "lists",
+  "margins",
+  "named-styles",
+  "style-overrides",
+  "tables",
+];
 
 const Header = () => {
-  const [state, dispatch] = [ React.useContext(globalStateContext), React.useContext(dispatchStateContext) ];
+  const state = React.useContext(globalStateContext);
   // set the name of the opened file
   const [filenametag, setFilenametag] = React.useState("File Name");
 
@@ -26,8 +42,8 @@ const Header = () => {
 
   const handleClosefile = (event) => {
     setFilenametag(event.target.innerText);
-    dispatch({filename: event.target.innerText});
-    console.log(state.filename)
+    state.filename = event.target.innerText;
+    console.log(state.filename);
     setAnchorfile(null);
   };
 
@@ -47,32 +63,32 @@ const Header = () => {
       <div className="header_logo">
         <a href="/">Back2dev</a>
       </div>
-      <Box sx={{flexGrow: 1}}>
+      <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar disableGutters>
             <Box sx={{ flexGrow: 0 }} ml="15px">
               <Tooltip title="Open File">
                 <Button
-                    size="large"
-                    onClick={handleOpenfile}
-                    color="inherit"
-                    variant="text"
-                  >
+                  size="large"
+                  onClick={handleOpenfile}
+                  color="inherit"
+                  variant="text"
+                >
                   <FileOpenIcon />
                 </Button>
               </Tooltip>
               <Menu
-                sx={{ mt: '45px' }}
+                sx={{ mt: "45px" }}
                 id="menu-appbar"
                 anchorEl={anchorfile}
                 anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
+                  vertical: "top",
+                  horizontal: "right",
                 }}
                 keepMounted
                 transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
+                  vertical: "top",
+                  horizontal: "right",
                 }}
                 open={Boolean(anchorfile)}
                 onClose={handleClosefile}
@@ -85,7 +101,7 @@ const Header = () => {
               </Menu>
             </Box>
 
-            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -100,18 +116,18 @@ const Header = () => {
                 id="menu-appbar"
                 anchorEl={anchorElNav}
                 anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
+                  vertical: "bottom",
+                  horizontal: "left",
                 }}
                 keepMounted
                 transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
+                  vertical: "top",
+                  horizontal: "left",
                 }}
                 open={Boolean(anchorElNav)}
                 onClose={handleCloseNavMenu}
                 sx={{
-                  display: { xs: 'block', md: 'none' },
+                  display: { xs: "block", md: "none" },
                 }}
               >
                 {pages.map((page) => (
@@ -122,21 +138,21 @@ const Header = () => {
               </Menu>
             </Box>
 
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((page) => (
                 <Button
                   key={page}
                   onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
+                  sx={{ my: 2, color: "white", display: "block" }}
                   variant="text"
                 >
                   {page}
                 </Button>
               ))}
             </Box>
-          <Box mr='15px' id="filenametag" fontWeight="bold">
-            {filenametag}
-          </Box>
+            <Box mr="15px" id="filenametag" fontWeight="bold">
+              {filenametag}
+            </Box>
           </Toolbar>
         </AppBar>
       </Box>
