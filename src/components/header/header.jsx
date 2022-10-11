@@ -9,11 +9,12 @@ import './header.css'
 
 const pages = ["New"];
 
-const files = ["File 1", "File 2", "File 3", "File 4"];
+const files = ['basics', 'columns', 'inline-styling', 'lists', 'margins', 'named-styles', 'style-overrides', 'tables'];
 
 const Header = () => {
 
-  // file states
+  // set the name of the opened file
+  const [filenametag, setFilenametag] = React.useState("File Name");
 
   const [anchorfile, setAnchorfile] = React.useState(null);
 
@@ -22,7 +23,7 @@ const Header = () => {
   };
 
   const handleClosefile = (event) => {
-    document.getElementById("filename").innerHTML = event.target.innerHTML;
+    setFilenametag(event.target.innerText);
     setAnchorfile(null);
   };
 
@@ -129,8 +130,8 @@ const Header = () => {
                 </Button>
               ))}
             </Box>
-          <Box mr='15px' id="filename" fontWeight="bold">
-            File name
+          <Box mr='15px' id="filenametag" fontWeight="bold">
+            {filenametag}
           </Box>
           </Toolbar>
         </AppBar>
