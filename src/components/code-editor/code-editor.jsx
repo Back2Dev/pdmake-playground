@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { Box, ToggleButtonGroup, ToggleButton, Button, Grid } from '@mui/material';
+import React, { useState, useRef } from "react"
+import { Box, ToggleButtonGroup, ToggleButton, Button, Grid, TextField } from '@mui/material';
 import { xcodeLight, xcodeDark } from '@uiw/codemirror-theme-xcode';
 import Split from 'react-split';
 import { debounce } from "lodash";
@@ -23,7 +23,7 @@ const CodeEditor = () => {
   const [err, setErr] = useState("")
   const [theme, setTheme] = useState(xcodeDark);
   const value = localStorage.getItem("myValue") || ""
-
+  const ref = useRef(null)
   const selectTheme = (event) => {
     if (event.target.value === 'dark') {
       setTheme(xcodeDark);
@@ -33,9 +33,9 @@ const CodeEditor = () => {
     }
   }
   let dd = {}
-  const formatData = () => {
+  const formatData = (myValue="") => {
     try {
-      const value = localStorage.getItem("myValue") || ""
+      const value = localStorage.getItem("myValue") || myValue
       console.log("value: ", value)
       const docDefinition = eval(value)
       console.log("docDefinition: ", docDefinition)
@@ -64,8 +64,9 @@ const CodeEditor = () => {
 
 
   const clickFormatButton = () => { 
-    formatData()
+    formatData(ref.current.value)
   }
+
 
 
   return (
@@ -96,7 +97,9 @@ const CodeEditor = () => {
                   }}
                   theme={theme}
                 />
-                <ErrorBar errorMessage={err} />
+                <ErrorBar errorMessage={err} data-cy="errorbar"/>
+                <textarea ref={ref} id="textarea" name="textarea" data-cy="typeinarea" />
+                <button onClick={clickFormatButton} data-cy="texttopdf">Click</button>
               </Box >
             </Grid>
             <Grid item columns={1}>
@@ -110,7 +113,7 @@ const CodeEditor = () => {
                 ></iframe>
               </Box >
               <div>
-                <Button onClick={clickFormatButton}>Update PDF</Button>
+                <Button onClick={clickFormatButton} data-cy="updatepdfbutton">Update PDF</Button>
                 <ToggleButtonGroup exclusive={true} className='MuiToggleButtonGroup-groupedHorizontal theme-selector'>
                   <ToggleButton value="dark" onClick={selectTheme} aria-label="Dark-theme">Dark</ToggleButton>
                   <ToggleButton value="light" onClick={selectTheme} aria-label="Light-theme">Light</ToggleButton>
