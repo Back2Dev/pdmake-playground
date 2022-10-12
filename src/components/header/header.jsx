@@ -30,16 +30,7 @@ const pages = [
   "IMAGES",
 ];
 
-const files = [
-  "basics",
-  "columns",
-  "inline-styling",
-  "lists",
-  "margins",
-  "named-styles",
-  "style-overrides",
-  "tables",
-];
+const files = ["new file", "save", "list"];
 
 const Header = () => {
   const state = React.useContext(globalStateContext);
@@ -66,11 +57,16 @@ const Header = () => {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (event) => {
+    setFilenametag(event.target.value);
+    state.filename = event.target.value;
+    console.log(state.filename);
     setAnchorElNav(null);
   };
 
-  const handleOpenSample = (event) => {};
+  const handleOpenSample = (event) => {
+    setAnchorElNav(null);
+  };
 
   return (
     <div className="header">
@@ -167,6 +163,7 @@ const Header = () => {
               {pages.map((page) => (
                 <Button
                   key={page}
+                  value={page}
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: "white", display: "block" }}
                   variant="text"
@@ -177,7 +174,7 @@ const Header = () => {
             </Box>
             <PdfOptions />
             <Box mr="15px" id="filename" fontWeight="bold">
-              File name
+              {filenametag}
             </Box>
           </Toolbar>
         </AppBar>

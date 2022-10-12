@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import Header from "../header/header";
-import Mainbody from "../mainbody/mainbody";
+import CodeEditor from "../code-editor/code-editor";
 import Footer from "../footer/footer";
 import { GlobalStateProvider } from "../context/provider";
 
