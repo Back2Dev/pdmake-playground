@@ -24,10 +24,14 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 import "./code-editor.css";
 import ErrorBar from "../error-bar/error-bar";
+import { globalStateContext } from "../context/provider";
 
 const stateFields = { history: historyField };
 
 const CodeEditor = (props) => {
+  // set globalStateContext
+  const gstate = React.useContext(globalStateContext);
+
   const serializedState = localStorage.getItem("myEditorState");
   const [err, setErr] = useState("");
   const [theme, setTheme] = useState(xcodeDark);

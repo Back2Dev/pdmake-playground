@@ -33,7 +33,7 @@ const pages = [
 const files = ["new file", "save", "list"];
 
 const Header = () => {
-  const state = React.useContext(globalStateContext);
+  const gstate = React.useContext(globalStateContext);
   // set the name of the opened file
   const [filenametag, setFilenametag] = React.useState("File Name");
 
@@ -45,8 +45,8 @@ const Header = () => {
 
   const handleClosefile = (event) => {
     setFilenametag(event.target.innerText);
-    state.filename = event.target.innerText;
-    console.log(state.filename);
+    gstate.filename = event.target.innerText;
+    console.log(gstate.filename);
     setAnchorfile(null);
   };
 
@@ -59,8 +59,8 @@ const Header = () => {
 
   const handleCloseNavMenu = (event) => {
     setFilenametag(event.target.value);
-    state.filename = event.target.value;
-    console.log(state.filename);
+    gstate.filename = event.target.value;
+    console.log(gstate.filename);
     setAnchorElNav(null);
   };
 
