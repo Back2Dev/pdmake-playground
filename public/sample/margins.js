@@ -1,4 +1,4 @@
-content: [
+export const MARGIN = {content: [
 	{
 		stack: [
 			'This header has both top and bottom margins defined',
@@ -67,4 +67,5 @@ styles: {
 		margin: [20, 0, 40, 0],
 		fontSize: 15
 	}
+}
 }

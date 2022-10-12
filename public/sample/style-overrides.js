@@ -1,4 +1,4 @@
-content: [
+export const STYLE3 = {content: [
 	{
 		text: 'This paragraph uses header style and extends the alignment property',
 		style: 'header',
@@ -20,4 +20,5 @@ styles: {
 		bold: true,
 		alignment: 'justify'
 	}
+}
 }
