@@ -140,37 +140,39 @@ const Header = () => {
                   display: { xs: "block", md: "none" },
                 }}
               >
-                {pages.map((page) => (
-                  <MenuItem
-                    key={page}
-                    onClick={handleOpenSample}
-                    value={page}
-                    sx={{
-                      my: 2,
-                      color: "white",
-                      fontWeight: "bold",
-                      fontSize: "0.65rem",
-                    }}
-                  >
-                    <Typography textAlign="center">{page}</Typography>
-                  </MenuItem>
-                ))}
-                {/* <SampleFiles /> */}
+                {false &&
+                  pages.map((page) => (
+                    <MenuItem
+                      key={page}
+                      onClick={handleOpenSample}
+                      value={page}
+                      sx={{
+                        my: 2,
+                        color: "white",
+                        fontWeight: "bold",
+                        fontSize: "0.65rem",
+                      }}
+                    >
+                      <Typography textAlign="center">{page}</Typography>
+                    </MenuItem>
+                  ))}
               </Menu>
             </Box>
 
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              {pages.map((page) => (
-                <Button
-                  key={page}
-                  value={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                  variant="text"
-                >
-                  {page}
-                </Button>
-              ))}
+              <SampleFiles />
+              {false &&
+                pages.map((page) => (
+                  <Button
+                    key={page}
+                    value={page}
+                    onClick={handleCloseNavMenu}
+                    sx={{ my: 2, color: "white", display: "block" }}
+                    variant="text"
+                  >
+                    {page}
+                  </Button>
+                ))}
             </Box>
             <PdfOptions />
             <Box mr="15px" id="filename" fontWeight="bold">

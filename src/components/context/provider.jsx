@@ -20,3 +20,35 @@ export const GlobalStateProvider = ({ children }) => {
     </globalStateContext.Provider>
   );
 };
+
+// Another way to do this...
+const EditorContext = React.createContext("editor");
+
+export default EditorContext;
+
+function editorReducer(state, action) {
+  const { type, payload } = action;
+  switch (type) {
+    case "setCode":
+      return {
+        ...state,
+        code: payload,
+      };
+    default:
+      return state;
+  }
+}
+
+export const EditorProvider = ({ children }) => {
+  const [state, dispatch] = React.useReducer(editorReducer, {
+    code: 'dd = {content: "Hello "}',
+  });
+  const setCode = (data) => {
+    dispatch({ type: "setCode", payload: data });
+  };
+  return (
+    <EditorContext.Provider value={{ ...state, setCode }}>
+      {children}
+    </EditorContext.Provider>
+  );
+};

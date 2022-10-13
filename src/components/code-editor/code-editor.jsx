@@ -16,6 +16,7 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import CodeMirror from "@uiw/react-codemirror";
+
 import { javascript } from "@codemirror/lang-javascript";
 import { historyField } from "@codemirror/commands";
 import pdfMake from "pdfmake/build/pdfmake";
@@ -35,11 +36,10 @@ const CodeEditor = (props) => {
   const serializedState = localStorage.getItem("myEditorState");
   const [err, setErr] = useState("");
   const [theme, setTheme] = useState(xcodeDark);
-  const [value, setValue] = useState(
-    localStorage.getItem("myValue") || "dd = { content : ['Hello','World']} "
-  );
+  const [value, setValue] = useState("dd = { content : ['Hello','World']} ");
   const [useCM, setUseCM] = useState(true);
-  const ref = useRef(null);
+  const taRef = useRef(null);
+  const cmRef = useRef(null);
   const selectTheme = (event) => {
     if (event.target.value === "dark") {
       setTheme(xcodeDark);
@@ -50,10 +50,6 @@ const CodeEditor = (props) => {
   let dd = {};
   const makePdf = () => {
     try {
-      const value =
-        localStorage.getItem("myValue") ||
-        "dd = { content : ['Hello','World']} ";
-      // console.log("value: ", value)
       const docDefinition = eval(value);
       // console.log("docDefinition: ", docDefinition)
       const pdfDocGenerator = pdfMake.createPdf(docDefinition);
@@ -67,13 +63,16 @@ const CodeEditor = (props) => {
       setErr(`Error: ${e.message}`);
     }
   };
+
   useEffect(() => {
     makePdf();
   }, []);
-  const handleChange = (value, viewUpdate) => {
-    localStorage.setItem("myValue", value.replace("var dd", "dd"));
-    const state = viewUpdate.state.toJSON(stateFields);
-    localStorage.setItem("myEditorState", JSON.stringify(state));
+
+  const handleChange = (val, viewUpdate) => {
+    setValue(val);
+    // localStorage.setItem("myValue", value.replace("var dd", "dd"));
+    // const state = viewUpdate.state.toJSON(stateFields);
+    // localStorage.setItem("myEditorState", JSON.stringify(state));
     makePdf();
   };
 
@@ -91,6 +90,9 @@ const CodeEditor = (props) => {
     });
     console.log({ formatted });
     setValue(formatted);
+    // const cm = cmRef.current.codeMirrorInstance;
+    // debugger;
+    // cm.setValue(formatted);
   };
 
   const toggleEditor = () => {
@@ -109,15 +111,8 @@ const CodeEditor = (props) => {
                 {useCM && (
                   <CodeMirror
                     value={value}
+                    ref={cmRef}
                     height="80vh"
-                    initialState={
-                      serializedState
-                        ? {
-                            json: JSON.parse(serializedState || ""),
-                            fields: stateFields,
-                          }
-                        : undefined
-                    }
                     onChange={debouncedOnChange}
                     extensions={[javascript({ jsx: true })]}
                     basicSetup={{
@@ -133,7 +128,7 @@ const CodeEditor = (props) => {
                 {!useCM && (
                   <textarea
                     className="cm-editor"
-                    ref={ref}
+                    ref={taRef}
                     id="textarea"
                     name="textarea"
                     data-cy="typeinarea"
