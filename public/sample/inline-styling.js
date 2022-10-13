@@ -1,4 +1,4 @@
-content: [
+export const STYLE2 = {content: [
 	{
 		text: 'This is a header (whole paragraph uses the same header style)\n\n',
 		style: 'header'
@@ -43,4 +43,5 @@ styles: {
 		fontSize: 15,
 		italics: true
 	}
+}
 }

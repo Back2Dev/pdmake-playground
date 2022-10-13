@@ -1,4 +1,4 @@
-content: [
+export const LISTS = {content: [
 	{text: 'Unordered list', style: 'header'},
 	{
 		ul: [
@@ -383,4 +383,5 @@ styles: {
 },
 defaultStyle: {
 	fontSize: 12
+}
 }

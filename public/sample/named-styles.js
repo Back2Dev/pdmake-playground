@@ -1,4 +1,4 @@
-content: [
+export const STYLE1 = {content: [
 	{
 		text: 'This is a header, using header style',
 		style: 'header'
@@ -37,4 +37,5 @@ styles: {
 	small: {
 		fontSize: 8
 	}
+}
 }
