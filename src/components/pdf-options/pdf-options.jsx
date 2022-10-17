@@ -1,33 +1,23 @@
 import React from 'react'
-import { Box, Button } from '@mui/material'
+import { Button, MenuItem } from '@mui/material'
 import EditorContext from "../context/provider";
 
 const PdfOptions = () => {
   const { code, setCode } = React.useContext(EditorContext);
-
   let dd
-  const printDoc = () => {
-
-    const doc = eval(code)
-    pdfMake.createPdf(doc).print()
-  }
-
-  const openDoc = () => {
-    const doc = eval(code)
-    pdfMake.createPdf(doc).open()
-  }
-  const downloadDoc = () => {
-    const doc = eval(code)
-    pdfMake.createPdf(doc).download()
-  }
+  const buttonStyle = { my: 2, color: 'inherit', fontWeight: "bold", fontSize: "0.65rem" }
 
   return (
     <>
-      <Box mr='15px' id="pdf-options" fontWeight="bold" marginRight="4rem">
-        <Button variant="text" onClick={openDoc} id='open-pdf' sx={{ my: 2, color: 'white', fontWeight: "bold", fontSize: "0.65rem" }}>OPEN</Button>
-        <Button variant="text" onClick={printDoc} id='print-pdf' sx={{ my: 2, color: 'white', fontWeight: "bold", fontSize: "0.65rem" }}>PRINT</Button>
-        <Button variant="text" onClick={downloadDoc} id='download-pdf' sx={{ my: 2, color: 'white', fontWeight: "bold", fontSize: "0.65rem" }}>DOWNLOAD</Button>
-      </Box>
+      <MenuItem  >
+        <Button variant="text" onClick={() => pdfMake.createPdf(eval(code)).open()} id='open-pdf' sx={buttonStyle}>OPEN</Button>
+      </MenuItem>
+      <MenuItem  >
+        <Button variant="text" onClick={() => pdfMake.createPdf(eval(code)).print()} id='print-pdf' sx={buttonStyle}>PRINT</Button>
+      </MenuItem>
+      <MenuItem  >
+        <Button variant="text" onClick={() => pdfMake.createPdf(eval(code)).download()} id='download-pdf' sx={buttonStyle}>DOWNLOAD</Button>
+      </MenuItem>
     </>
   )
 }

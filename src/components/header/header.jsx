@@ -17,19 +17,7 @@ import "./header.css";
 import PdfOptions from "../pdf-options/pdf-options";
 import SampleFiles from "../sample-files/sample-file";
 import EditorContext from "../context/provider";
-
-
-const pages = [
-  "BASICS",
-  "STYLE1",
-  "STYLE2",
-  "STYLE3",
-  "COLUMNS",
-  "TABLES",
-  "LISTS",
-  "MARGIN",
-  "IMAGES",
-];
+import { ViewColumn } from "@mui/icons-material";
 
 const files = ["new file", "save", "list"];
 
@@ -37,8 +25,6 @@ const Header = () => {
 
   const { code, setCode } = React.useContext(EditorContext);
   const { filename, setFilename } = React.useContext(EditorContext);
-  // const gstate = React.useContext(globalStateContext);
-  // set the name of the opened file
   const [filenametag, setFilenametag] = React.useState("File Name");
 
   const [anchorfile, setAnchorfile] = React.useState(null);
@@ -49,23 +35,27 @@ const Header = () => {
 
   const handleClosefile = (event) => {
     setFilename(event.target.innerText);
-    // gstate.filename = event.target.innerText;
-    // console.log(gstate.filename);
     setAnchorfile(null);
   };
 
   // menu states
   const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElPdf, setAnchorElPdf] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
 
   const handleCloseNavMenu = (event) => {
-    setFilenametag(event.target.value);
-    // gstate.filename = event.target.value;
-    // console.log(gstate.filename);
+    setFilename(event.target.value);
     setAnchorElNav(null);
+
+  }; const handleOpenPdfMenu = (event) => {
+    setAnchorElPdf(event.currentTarget);
+  };
+
+  const handleClosePdfMenu = (event) => {
+    setAnchorElPdf(null);
   };
 
   const handleOpenSample = (event) => {
@@ -130,55 +120,70 @@ const Header = () => {
                 id="menu-appbar"
                 anchorEl={anchorElNav}
                 anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: "flex", md: "none" },
+                  direction: "column",
+                  color: "inherit",
+                  my: 2,
+                }}
+              >
+                <SampleFiles />
+              </Menu>
+            </Box>
+
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+              <SampleFiles />
+            </Box>
+            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+
+              <IconButton
+                size="large"
+                aria-label="pdf-options"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenPdfMenu}
+                color="inherit"
+
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="pdf-menu-appbar"
+                anchorEl={anchorElPdf}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
                 }}
                 keepMounted
                 transformOrigin={{
                   vertical: "top",
                   horizontal: "left",
                 }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
+                open={Boolean(anchorElPdf)}
+                onClose={handleClosePdfMenu}
                 sx={{
-                  display: { xs: "block", md: "none" },
+                  display: { xs: "flex", md: "flex", lg: "none" },
+                  direction: "column",
+                  color: "inherit",
+                  my: 2,
                 }}
               >
-                {false &&
-                  pages.map((page) => (
-                    <MenuItem
-                      key={page}
-                      onClick={handleOpenSample}
-                      value={page}
-                      sx={{
-                        my: 2,
-                        color: "white",
-                        fontWeight: "bold",
-                        fontSize: "0.65rem",
-                      }}
-                    >
-                      <Typography textAlign="center">{page}</Typography>
-                    </MenuItem>
-                  ))}
+                <PdfOptions />
               </Menu>
             </Box>
-
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              <SampleFiles />
-              {false &&
-                pages.map((page) => (
-                  <Button
-                    key={page}
-                    value={page}
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: "white", display: "block" }}
-                    variant="text"
-                  >
-                    {page}
-                  </Button>
-                ))}
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "none", lg: "flex" } }}>
+              <PdfOptions />
             </Box>
-            <PdfOptions />
             <Box mr="15px" id="filename" fontWeight="bold">
               {filename}
             </Box>

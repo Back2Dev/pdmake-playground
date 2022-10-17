@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, MenuItem } from "@mui/material";
 import EditorContext from "../context/provider";
 import basics from "./basics";
 import styles1 from "./styles1";
@@ -9,7 +9,7 @@ import columns from "./columns";
 import tables from "./tables";
 import lists from "./lists";
 import margin from "./margin";
-import images from "./images";
+import images from "./tables";
 
 const SampleFiles = () => {
   const samples = {
@@ -29,14 +29,14 @@ const SampleFiles = () => {
 
   const openDoc = (e) => {
     console.log(`Loading ${e.target.value}`);
-    setCode(samples[e.target.value]);
     setFilename(e.target.value);
+    setCode(samples[e.target.value]);
   };
   return (
     <>
-      <Box mr="15px" id="pdf-options" fontWeight="bold" marginRight="4rem">
-        {Object.keys(samples).map((sample) => {
-          return (
+      {Object.keys(samples).map((sample) => {
+        return (
+          <MenuItem key={sample}>
             <Button
               key={sample}
               value={sample}
@@ -44,16 +44,16 @@ const SampleFiles = () => {
               onClick={openDoc}
               sx={{
                 my: 2,
-                color: "white",
+                color: "inherit",
                 fontWeight: "bold",
                 fontSize: "0.65rem",
               }}
             >
               {sample}
             </Button>
-          );
-        })}
-      </Box>
+          </MenuItem>
+        );
+      })}
     </>
   );
 };
