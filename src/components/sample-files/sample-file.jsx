@@ -4,18 +4,24 @@ import EditorContext from "../context/provider";
 import basics from "./basics";
 import styles1 from "./styles1";
 import styles2 from "./styles2";
+import styles3 from "./styles3";
+import columns from "./columns";
+import tables from "./tables";
+import lists from "./lists";
+import margin from "./margin";
+import images from "./images";
 
 const SampleFiles = () => {
   const samples = {
     BASICS: basics,
     STYLE1: styles1,
     STYLE2: styles2,
-    // "STYLE3",
-    // "COLUMNS",
-    // "TABLES",
-    // "LISTS",
-    // "MARGIN",
-    // "IMAGES",
+    STYLE3: styles3,
+    COLUMNS: columns,
+    TABLES: tables,
+    LISTS: lists,
+    MARGIN: margin,
+    IMAGES: images,
   };
   const { code, setCode } = React.useContext(EditorContext);
   const { filename, setFilename } = React.useContext(EditorContext);
