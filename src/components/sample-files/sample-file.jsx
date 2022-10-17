@@ -18,7 +18,7 @@ const SampleFiles = () => {
     // "IMAGES",
   };
   const { code, setCode } = React.useContext(EditorContext);
-  console.log({ code });
+  // console.log("code:", { code });
 
   const openDoc = (e) => {
     console.log(`Loading ${e.target.value}`);
