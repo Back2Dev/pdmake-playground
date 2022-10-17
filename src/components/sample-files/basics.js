@@ -1,4 +1,4 @@
-const js = `
+const js = `dd = 
 {
 	content: [
 		'First paragraph',

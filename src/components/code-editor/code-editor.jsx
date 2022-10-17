@@ -22,6 +22,7 @@ import { historyField } from "@codemirror/commands";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import EditorContext from "../context/provider";
 
 import "./code-editor.css";
 import ErrorBar from "../error-bar/error-bar";
@@ -31,7 +32,9 @@ const stateFields = { history: historyField };
 
 const CodeEditor = (props) => {
   // set globalStateContext
-  const gstate = React.useContext(globalStateContext);
+  // const gstate = React.useContext(globalStateContext);
+  const { code, setCode } = React.useContext(EditorContext);
+  // console.log("code:", { code });
 
   const serializedState = localStorage.getItem("myEditorState");
   const [err, setErr] = useState("");
@@ -50,8 +53,10 @@ const CodeEditor = (props) => {
   let dd = {};
   const makePdf = () => {
     try {
-      const docDefinition = eval(value);
-      // console.log("docDefinition: ", docDefinition)
+      console.log("code type: ", typeof (code))
+      const docDefinition = eval(code);
+      console.log("docDefinition: ", docDefinition)
+      console.log("docDefinition type: ", typeof (docDefinition))
       const pdfDocGenerator = pdfMake.createPdf(docDefinition);
       pdfDocGenerator.getDataUrl((dataUrl) => {
         const targetElement = document.getElementById("pdfView");
@@ -69,7 +74,8 @@ const CodeEditor = (props) => {
   }, []);
 
   const handleChange = (val, viewUpdate) => {
-    setValue(val);
+    // setValue(val);
+    setCode(val)
     // localStorage.setItem("myValue", value.replace("var dd", "dd"));
     // const state = viewUpdate.state.toJSON(stateFields);
     // localStorage.setItem("myEditorState", JSON.stringify(state));
@@ -79,7 +85,7 @@ const CodeEditor = (props) => {
   const debouncedOnChange = debounce(handleChange, 1000);
 
   const formatCode = () => {
-    const formatted = prettier.format(value, {
+    const formatted = prettier.format(code, {
       useTabs: false,
       printWidth: 90,
       tabWidth: 2,
@@ -89,7 +95,7 @@ const CodeEditor = (props) => {
       plugins: [babelParser],
     });
     console.log({ formatted });
-    setValue(formatted);
+    setCode(formatted);
     // const cm = cmRef.current.codeMirrorInstance;
     // debugger;
     // cm.setValue(formatted);
@@ -110,7 +116,7 @@ const CodeEditor = (props) => {
               >
                 {useCM && (
                   <CodeMirror
-                    value={value}
+                    value={`${code}`}
                     ref={cmRef}
                     height="80vh"
                     onChange={debouncedOnChange}
@@ -134,7 +140,7 @@ const CodeEditor = (props) => {
                     data-cy="typeinarea"
                     style={{ width: "100%" }}
                   >
-                    {value}
+                    {code}
                   </textarea>
                 )}
                 <FormGroup>
