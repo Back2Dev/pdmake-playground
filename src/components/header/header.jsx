@@ -16,7 +16,8 @@ import { Link } from "react-router-dom";
 import "./header.css";
 import PdfOptions from "../pdf-options/pdf-options";
 import SampleFiles from "../sample-files/sample-file";
-import { globalStateContext } from "../context/provider";
+import EditorContext from "../context/provider";
+
 
 const pages = [
   "BASICS",
@@ -33,7 +34,10 @@ const pages = [
 const files = ["new file", "save", "list"];
 
 const Header = () => {
-  const gstate = React.useContext(globalStateContext);
+
+  const { code, setCode } = React.useContext(EditorContext);
+  const { filename, setFilename } = React.useContext(EditorContext);
+  // const gstate = React.useContext(globalStateContext);
   // set the name of the opened file
   const [filenametag, setFilenametag] = React.useState("File Name");
 
@@ -44,9 +48,9 @@ const Header = () => {
   };
 
   const handleClosefile = (event) => {
-    setFilenametag(event.target.innerText);
-    gstate.filename = event.target.innerText;
-    console.log(gstate.filename);
+    setFilename(event.target.innerText);
+    // gstate.filename = event.target.innerText;
+    // console.log(gstate.filename);
     setAnchorfile(null);
   };
 
@@ -59,8 +63,8 @@ const Header = () => {
 
   const handleCloseNavMenu = (event) => {
     setFilenametag(event.target.value);
-    gstate.filename = event.target.value;
-    console.log(gstate.filename);
+    // gstate.filename = event.target.value;
+    // console.log(gstate.filename);
     setAnchorElNav(null);
   };
 
@@ -176,7 +180,7 @@ const Header = () => {
             </Box>
             <PdfOptions />
             <Box mr="15px" id="filename" fontWeight="bold">
-              {filenametag}
+              {filename}
             </Box>
           </Toolbar>
         </AppBar>

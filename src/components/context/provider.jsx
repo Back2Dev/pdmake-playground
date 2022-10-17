@@ -34,6 +34,11 @@ function editorReducer(state, action) {
         ...state,
         code: payload,
       };
+    case "setFilename":
+      return {
+        ...state,
+        filename: payload,
+      };
     default:
       return state;
   }
@@ -42,12 +47,16 @@ function editorReducer(state, action) {
 export const EditorProvider = ({ children }) => {
   const [state, dispatch] = React.useReducer(editorReducer, {
     code: 'dd = {content: "Hello "}',
+    filename: 'New'
   });
   const setCode = (data) => {
     dispatch({ type: "setCode", payload: data });
   };
+  const setFilename = (data) => {
+    dispatch({ type: "setFilename", payload: data });
+  };
   return (
-    <EditorContext.Provider value={{ ...state, setCode }}>
+    <EditorContext.Provider value={{ ...state, setCode, setFilename }}>
       {children}
     </EditorContext.Provider>
   );
