@@ -157,7 +157,7 @@ const Header = () => {
             >
               <SampleFiles />
             </Box>
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "flex", lg: "none" } }}>
               <IconButton
                 size="large"
                 aria-label="pdf-options"
