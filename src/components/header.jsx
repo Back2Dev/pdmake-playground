@@ -20,10 +20,8 @@ import EditorContext from "./provider";
 import Settings from "./settings";
 
 const Header = () => {
-
   const { filename, setFilename } = React.useContext(EditorContext);
   const { code, setCode } = React.useContext(EditorContext);
-
 
   // menu states
   const [anchorfile, setAnchorfile] = React.useState(null);
@@ -44,10 +42,10 @@ const Header = () => {
       content: [
         
       ]
-    }`)
+    }`);
     setFilename(event.target.innerText);
     setAnchorfile(null);
-  }
+  };
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -61,7 +59,7 @@ const Header = () => {
   };
 
   const handleClosePdfMenu = (event) => {
-    console.log("handling closing pdf menu")
+    console.log("handling closing pdf menu");
     setAnchorElPdf(null);
   };
 
@@ -106,11 +104,15 @@ const Header = () => {
                 <MenuItem onClick={handleNewfile}>
                   <Typography textAlign="center">New File</Typography>
                 </MenuItem>
-
               </Menu>
             </Box>
 
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "flex", lg: "none" } }}>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: "flex", md: "flex", lg: "none" },
+              }}
+            >
               <IconButton
                 size="large"
                 aria-label="sample-files"
@@ -118,6 +120,7 @@ const Header = () => {
                 aria-haspopup="true"
                 onClick={handleOpenNavMenu}
                 color="inherit"
+                data-cy="nav-button"
               >
                 <MenuIcon />
               </IconButton>
@@ -146,7 +149,12 @@ const Header = () => {
               </Menu>
             </Box>
 
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "none", lg: "flex" } }}>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: "none", md: "none", lg: "flex" },
+              }}
+            >
               <SampleFiles />
             </Box>
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
