@@ -4,13 +4,15 @@ import EditorContext from "./provider";
 
 const PdfOptions = () => {
   const { code, setCode } = React.useContext(EditorContext);
-  let dd;
+
   const buttonStyle = {
     my: 2,
     color: "inherit",
     fontWeight: "bold",
     fontSize: "0.65rem",
   };
+
+  let dd;
 
   return (
     <>

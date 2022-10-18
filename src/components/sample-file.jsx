@@ -1,6 +1,5 @@
 import React from "react";
 import { Button, MenuItem } from "@mui/material";
-
 import EditorContext from "./provider";
 
 // import sample files
@@ -28,13 +27,13 @@ const SampleFiles = () => {
   };
   const { code, setCode } = React.useContext(EditorContext);
   const { filename, setFilename } = React.useContext(EditorContext);
-  // console.log("code:", { code });
 
   const openDoc = (e) => {
     console.log(`Loading ${e.target.value}`);
     setFilename(e.target.value);
     setCode(samples[e.target.value]);
   };
+
   return (
     <>
       {Object.keys(samples).map((sample) => {

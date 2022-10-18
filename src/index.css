@@ -1,3 +1,4 @@
+/* Basic Style */
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
@@ -15,11 +16,21 @@
   -webkit-text-size-adjust: 100%;
 }
 
+/* Body style */
 body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
   color: #666;
   background: white !important;
 }
 
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+/* Code-Editor Style */
 .cm-editor {
   height: 65vh;
   border-top: 3.75rem solid #323639;
@@ -66,6 +77,7 @@ iframe {
   border: 1px solid silver;
 }
 
+/* Header style */
 .header {
   background-color: white;
   top: 0;
@@ -87,6 +99,7 @@ iframe {
   color: #0074c1;
 }
 
+/* Foot style */
 .footer {
   font-size: 0.6rem;
   position: fixed;
@@ -110,15 +123,15 @@ iframe {
 .footer-small {
   font-size: 0.6rem;
 }
-
-.footer-large {
-  font-size: 1.2rem;
+d .footer-large {
+  font-size: 1rem;
 }
 
 .footer-medium {
   font-size: 0.8rem;
 }
 
+/* Link style */
 a {
   font-weight: 500;
   color: #646cff;
@@ -128,17 +141,7 @@ a:hover {
   color: #535bf2;
 }
 
-body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
+/* Screen Set */
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

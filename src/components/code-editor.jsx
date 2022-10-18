@@ -1,4 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
+import Split from "react-split";
+import { debounce } from "lodash";
+
 import {
   Box,
   ToggleButtonGroup,
@@ -7,37 +10,35 @@ import {
   Grid,
   TextField,
 } from "@mui/material";
-import { xcodeLight, xcodeDark } from "@uiw/codemirror-theme-xcode";
-import Split from "react-split";
-import { debounce } from "lodash";
-import prettier from "prettier/standalone";
-import babelParser from "prettier/parser-babel";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
+
 import CodeMirror from "@uiw/react-codemirror";
-
+import { xcodeLight, xcodeDark } from "@uiw/codemirror-theme-xcode";
 import { javascript } from "@codemirror/lang-javascript";
-import { historyField } from "@codemirror/commands";
 
-import pdfMake from "pdfmake/build/pdfmake";
-import pdfFonts from "pdfmake/build/vfs_fonts";
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import prettier from "prettier/standalone";
+import babelParser from "prettier/parser-babel";
 
 import EditorContext from "./provider";
 import ErrorBar from "./error-bar";
 
-const stateFields = { history: historyField };
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const CodeEditor = (props) => {
   const { code, setCode } = React.useContext(EditorContext);
-  const serializedState = localStorage.getItem("myEditorState");
   const [err, setErr] = useState("");
   const [theme, setTheme] = useState(xcodeDark);
-  const [value, setValue] = useState("dd = { content : ['Hello','World']} ");
   const [useCM, setUseCM] = useState(true);
   const taRef = useRef(null);
   const cmRef = useRef(null);
+
+  let dd = {};
+
   const selectTheme = (event) => {
     if (event.target.value === "dark") {
       setTheme(xcodeDark);
@@ -45,7 +46,7 @@ const CodeEditor = (props) => {
       setTheme(xcodeLight);
     }
   };
-  let dd = {};
+
   const makePdf = () => {
     try {
       console.log("code type: ", typeof code);
@@ -69,11 +70,7 @@ const CodeEditor = (props) => {
   }, []);
 
   const handleChange = (val, viewUpdate) => {
-    // setValue(val);
     setCode(val);
-    // localStorage.setItem("myValue", value.replace("var dd", "dd"));
-    // const state = viewUpdate.state.toJSON(stateFields);
-    // localStorage.setItem("myEditorState", JSON.stringify(state));
     makePdf();
   };
 
@@ -91,9 +88,6 @@ const CodeEditor = (props) => {
     });
     console.log({ formatted });
     setCode(formatted);
-    // const cm = cmRef.current.codeMirrorInstance;
-    // debugger;
-    // cm.setValue(formatted);
   };
 
   const toggleEditor = () => {

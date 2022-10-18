@@ -1,4 +1,5 @@
 import React from "react";
+// MUI
 import { Box } from "@mui/material";
 import {
   AppBar,
@@ -12,18 +13,15 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import FileOpenIcon from "@mui/icons-material/FileOpen";
-
+// Components
 import PdfOptions from "./pdf-options";
 import SampleFiles from "./sample-file";
 import EditorContext from "./provider";
 
-const files = ["new file", "save", "list"];
-
 const Header = () => {
-  const { code, setCode } = React.useContext(EditorContext);
-  const { filename, setFilename } = React.useContext(EditorContext);
-  const [filenametag, setFilenametag] = React.useState("File Name");
+  const files = ["new file", "save", "list"];
 
+  const { filename, setFilename } = React.useContext(EditorContext);
   const [anchorfile, setAnchorfile] = React.useState(null);
 
   const handleOpenfile = (event) => {
@@ -53,10 +51,6 @@ const Header = () => {
 
   const handleClosePdfMenu = (event) => {
     setAnchorElPdf(null);
-  };
-
-  const handleOpenSample = (event) => {
-    setAnchorElNav(null);
   };
 
   return (
