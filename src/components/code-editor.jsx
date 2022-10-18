@@ -123,7 +123,7 @@ const CodeEditor = (props) => {
                 sx={{ bgcolor: "#cccccc", height: "100%", color: "#FFFFFF" }}
                 id="iframeContainer"
               >
-                <iframe id="pdfView" src=""></iframe>
+                <iframe id="pdfView" src="" data-cy="pdfmake"></iframe>
               </Box>
             </Grid>
           </Split>

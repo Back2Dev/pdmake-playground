@@ -50,6 +50,7 @@ const SampleFiles = () => {
                 fontWeight: "bold",
                 fontSize: "0.65rem",
               }}
+              data-cy={sample}
             >
               {sample}
             </Button>
