@@ -6,7 +6,6 @@ const PdfOptions = (props) => {
   const { code, setCode } = React.useContext(EditorContext);
 
   const buttonStyle = {
-    my: 2,
     color: "inherit",
     fontWeight: "bold",
     fontSize: "0.65rem",
@@ -35,7 +34,7 @@ const PdfOptions = (props) => {
         >
           PRINT
         </Button>
-      </MenuItem >
+      </MenuItem>
       <MenuItem onClick={props.handleClosePdfMenu}>
         <Button
           variant="text"

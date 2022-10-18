@@ -38,7 +38,11 @@ const SampleFiles = (props) => {
     <>
       {Object.keys(samples).map((sample) => {
         return (
-          <MenuItem key={sample} onClick={props.handleCloseNavMenu}>
+          <MenuItem
+            key={sample}
+            onClick={props.handleCloseNavMenu}
+            style={{ minHeight: "5vh", maxHeight: "5vh" }}
+          >
             <Button
               key={sample}
               value={sample}

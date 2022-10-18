@@ -157,7 +157,12 @@ const Header = () => {
             >
               <SampleFiles />
             </Box>
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "flex", lg: "none" } }}>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: "flex", md: "none", lg: "none" },
+              }}
+            >
               <IconButton
                 size="large"
                 aria-label="pdf-options"
@@ -183,7 +188,7 @@ const Header = () => {
                 open={Boolean(anchorElPdf)}
                 onClose={handleClosePdfMenu}
                 sx={{
-                  display: { xs: "flex", md: "flex", lg: "none" },
+                  display: { xs: "flex", md: "none", lg: "none" },
                   direction: "column",
                   color: "inherit",
                   my: 2,
@@ -195,7 +200,7 @@ const Header = () => {
             <Box
               sx={{
                 flexGrow: 1,
-                display: { xs: "none", md: "none", lg: "flex" },
+                display: { xs: "none", md: "flex", lg: "flex" },
               }}
             >
               <PdfOptions />
