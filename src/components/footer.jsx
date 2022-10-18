@@ -31,7 +31,7 @@ Footer.defaultProps = {
   bgColor: "#1c76d2",
   fColor: "white",
   alignment: "center",
-  fSize: "small",
+  fSize: "medium",
   text: "Copyright © : Back2dev ",
 };
 export default Footer;

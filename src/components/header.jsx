@@ -182,7 +182,7 @@ const Header = () => {
             <Box mr="15px" id="filename" fontWeight="bold">
               {filename}
             </Box>
-            <Box mr="15px" id="filename" fontWeight="bold">
+            <Box mr="15px" fontWeight="bold">
               <Settings />
             </Box>
           </Toolbar>

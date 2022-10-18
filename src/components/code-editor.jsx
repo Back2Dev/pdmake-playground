@@ -2,13 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Split from "react-split";
 import { debounce } from "lodash";
 
-import {
-  Box,
-  Button,
-  Grid,
-  TextField,
-  FormGroup
-} from "@mui/material";
+import { Box, Button, Grid, TextField, FormGroup } from "@mui/material";
 import CodeMirror from "@uiw/react-codemirror";
 import { xcodeLight, xcodeDark } from "@uiw/codemirror-theme-xcode";
 import { javascript } from "@codemirror/lang-javascript";
@@ -34,7 +28,7 @@ const CodeEditor = (props) => {
 
   let dd = {};
 
-  const theme = (darktheme) ? xcodeDark : xcodeLight;
+  const theme = darktheme ? xcodeDark : xcodeLight;
 
   const makePdf = () => {
     try {
@@ -77,18 +71,17 @@ const CodeEditor = (props) => {
 
   return (
     <>
-      <Grid container columns={12} className="main-area">
+      <Grid container className="main-area">
         <Box width="100vw">
           <Split className="split">
-            <Grid item columns={1}>
+            <Grid item>
               <Box
-                sx={{ bgcolor: "#2a313e", height: "10vh", color: "#ffffff" }}
+                sx={{ bgcolor: "#2a313e", height: "100%", color: "#ffffff" }}
               >
                 {editor && (
                   <CodeMirror
                     value={`${code}`}
                     ref={cmRef}
-                    height="80vh"
                     onChange={debouncedOnChange}
                     extensions={[javascript({ jsx: true })]}
                     basicSetup={{
@@ -124,24 +117,13 @@ const CodeEditor = (props) => {
                 </FormGroup>
               </Box>
             </Grid>
-            <Grid item columns={1}>
+            <Grid item>
               <Box
-                sx={{ bgcolor: "#cccccc", height: "80vh", color: "#FFFFFF" }}
+                sx={{ bgcolor: "#cccccc", height: "100%", color: "#FFFFFF" }}
                 id="iframeContainer"
               >
-                <iframe
-                  id="pdfView"
-                  src=""
-                  width="100%"
-                  height="100%"
-                  border="0"
-                ></iframe>
+                <iframe id="pdfView" src=""></iframe>
               </Box>
-              <div>
-                <Button onClick={makePdf} data-cy="updatepdfbutton">
-                  Update PDF
-                </Button>
-              </div>
             </Grid>
           </Split>
         </Box>

@@ -4,7 +4,6 @@
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
-
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
@@ -32,7 +31,8 @@ h1 {
 
 /* Code-Editor Style */
 .cm-editor {
-  height: 65vh;
+  height: 100%;
+  min-height: 80vh;
   border-top: 3.75rem solid #323639;
   border-right: 0.25rem solid #323639;
   border-left: 0.25rem solid #323639;
