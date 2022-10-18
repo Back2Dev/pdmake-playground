@@ -17,7 +17,7 @@ import FileOpenIcon from "@mui/icons-material/FileOpen";
 import PdfOptions from "./pdf-options";
 import SampleFiles from "./sample-file";
 import EditorContext from "./provider";
-import Settings from "./settings/settings";
+import Settings from "./settings";
 
 const Header = () => {
   const files = ["new file", "save", "list"];
