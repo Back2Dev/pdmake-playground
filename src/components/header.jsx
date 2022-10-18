@@ -17,6 +17,7 @@ import FileOpenIcon from "@mui/icons-material/FileOpen";
 import PdfOptions from "./pdf-options";
 import SampleFiles from "./sample-file";
 import EditorContext from "./provider";
+import Settings from "./settings/settings";
 
 const Header = () => {
   const files = ["new file", "save", "list"];
@@ -180,6 +181,9 @@ const Header = () => {
             </Box>
             <Box mr="15px" id="filename" fontWeight="bold">
               {filename}
+            </Box>
+            <Box mr="15px" id="filename" fontWeight="bold">
+              <Settings />
             </Box>
           </Toolbar>
         </AppBar>

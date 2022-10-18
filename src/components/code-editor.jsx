@@ -4,16 +4,11 @@ import { debounce } from "lodash";
 
 import {
   Box,
-  ToggleButtonGroup,
-  ToggleButton,
   Button,
   Grid,
   TextField,
+  FormGroup
 } from "@mui/material";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
-
 import CodeMirror from "@uiw/react-codemirror";
 import { xcodeLight, xcodeDark } from "@uiw/codemirror-theme-xcode";
 import { javascript } from "@codemirror/lang-javascript";
@@ -31,28 +26,19 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const CodeEditor = (props) => {
   const { code, setCode } = React.useContext(EditorContext);
+  const { editor, setEditor } = React.useContext(EditorContext);
+  const { darktheme, setDarkTheme } = React.useContext(EditorContext);
   const [err, setErr] = useState("");
-  const [theme, setTheme] = useState(xcodeDark);
-  const [useCM, setUseCM] = useState(true);
   const taRef = useRef(null);
   const cmRef = useRef(null);
 
   let dd = {};
 
-  const selectTheme = (event) => {
-    if (event.target.value === "dark") {
-      setTheme(xcodeDark);
-    } else if (event.target.value === "light") {
-      setTheme(xcodeLight);
-    }
-  };
+  const theme = (darktheme) ? xcodeDark : xcodeLight;
 
   const makePdf = () => {
     try {
-      console.log("code type: ", typeof code);
       const docDefinition = eval(code);
-      console.log("docDefinition: ", docDefinition);
-      console.log("docDefinition type: ", typeof docDefinition);
       const pdfDocGenerator = pdfMake.createPdf(docDefinition);
       pdfDocGenerator.getDataUrl((dataUrl) => {
         const targetElement = document.getElementById("pdfView");
@@ -86,12 +72,7 @@ const CodeEditor = (props) => {
       parser: "babel",
       plugins: [babelParser],
     });
-    console.log({ formatted });
     setCode(formatted);
-  };
-
-  const toggleEditor = () => {
-    setUseCM(!useCM);
   };
 
   return (
@@ -103,7 +84,7 @@ const CodeEditor = (props) => {
               <Box
                 sx={{ bgcolor: "#2a313e", height: "10vh", color: "#ffffff" }}
               >
-                {useCM && (
+                {editor && (
                   <CodeMirror
                     value={`${code}`}
                     ref={cmRef}
@@ -120,7 +101,7 @@ const CodeEditor = (props) => {
                   />
                 )}
                 <ErrorBar errorMessage={err} data-cy="errorbar" />
-                {!useCM && (
+                {!editor && (
                   <textarea
                     className="cm-editor"
                     ref={taRef}
@@ -140,12 +121,7 @@ const CodeEditor = (props) => {
                   >
                     Format
                   </Button>
-                  <FormControlLabel
-                    control={<Switch checked={useCM} />}
-                    onChange={toggleEditor}
-                    label="use Code Mirror"
-                  />
-                </FormGroup>{" "}
+                </FormGroup>
               </Box>
             </Grid>
             <Grid item columns={1}>
@@ -165,25 +141,6 @@ const CodeEditor = (props) => {
                 <Button onClick={makePdf} data-cy="updatepdfbutton">
                   Update PDF
                 </Button>
-                <ToggleButtonGroup
-                  exclusive={true}
-                  className="MuiToggleButtonGroup-groupedHorizontal theme-selector"
-                >
-                  <ToggleButton
-                    value="dark"
-                    onClick={selectTheme}
-                    aria-label="Dark-theme"
-                  >
-                    Dark
-                  </ToggleButton>
-                  <ToggleButton
-                    value="light"
-                    onClick={selectTheme}
-                    aria-label="Light-theme"
-                  >
-                    Light
-                  </ToggleButton>
-                </ToggleButtonGroup>
               </div>
             </Grid>
           </Split>
