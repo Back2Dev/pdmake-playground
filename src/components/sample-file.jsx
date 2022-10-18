@@ -1,15 +1,18 @@
 import React from "react";
-import { Box, Button, MenuItem } from "@mui/material";
-import EditorContext from "../context/provider";
-import basics from "./basics";
-import styles1 from "./styles1";
-import styles2 from "./styles2";
-import styles3 from "./styles3";
-import columns from "./columns";
-import tables from "./tables";
-import lists from "./lists";
-import margin from "./margin";
-import images from "./tables";
+import { Button, MenuItem } from "@mui/material";
+
+import EditorContext from "./provider";
+
+// import sample files
+import basics from "./sample-files/basics";
+import styles1 from "./sample-files/styles1";
+import styles2 from "./sample-files/styles2";
+import styles3 from "./sample-files/styles3";
+import columns from "./sample-files/columns";
+import tables from "./sample-files/tables";
+import lists from "./sample-files/lists";
+import margin from "./sample-files/margin";
+import images from "./sample-files/images";
 
 const SampleFiles = () => {
   const samples = {

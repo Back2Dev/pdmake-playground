@@ -1,8 +1,7 @@
-import "./App.css";
-import Header from "../header/header";
-import CodeEditor from "../code-editor/code-editor";
-import Footer from "../footer/footer";
-import { EditorProvider, GlobalStateProvider } from "../context/provider";
+import Header from "./header";
+import CodeEditor from "./code-editor";
+import Footer from "./footer";
+import { EditorProvider, GlobalStateProvider } from "./provider";
 
 const App = () => {
   return (

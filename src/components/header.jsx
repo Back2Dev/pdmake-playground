@@ -12,17 +12,14 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import FileOpenIcon from "@mui/icons-material/FileOpen";
-import { Link } from "react-router-dom";
-import "./header.css";
-import PdfOptions from "../pdf-options/pdf-options";
-import SampleFiles from "../sample-files/sample-file";
-import EditorContext from "../context/provider";
-import { ViewColumn } from "@mui/icons-material";
+
+import PdfOptions from "./pdf-options";
+import SampleFiles from "./sample-file";
+import EditorContext from "./provider";
 
 const files = ["new file", "save", "list"];
 
 const Header = () => {
-
   const { code, setCode } = React.useContext(EditorContext);
   const { filename, setFilename } = React.useContext(EditorContext);
   const [filenametag, setFilenametag] = React.useState("File Name");
@@ -49,8 +46,8 @@ const Header = () => {
   const handleCloseNavMenu = (event) => {
     setFilename(event.target.value);
     setAnchorElNav(null);
-
-  }; const handleOpenPdfMenu = (event) => {
+  };
+  const handleOpenPdfMenu = (event) => {
     setAnchorElPdf(event.currentTarget);
   };
 
@@ -145,7 +142,6 @@ const Header = () => {
               <SampleFiles />
             </Box>
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-
               <IconButton
                 size="large"
                 aria-label="pdf-options"
@@ -153,7 +149,6 @@ const Header = () => {
                 aria-haspopup="true"
                 onClick={handleOpenPdfMenu}
                 color="inherit"
-
               >
                 <MenuIcon />
               </IconButton>
@@ -181,7 +176,12 @@ const Header = () => {
                 <PdfOptions />
               </Menu>
             </Box>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "none", lg: "flex" } }}>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: "none", md: "none", lg: "flex" },
+              }}
+            >
               <PdfOptions />
             </Box>
             <Box mr="15px" id="filename" fontWeight="bold">

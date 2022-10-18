@@ -19,23 +19,18 @@ import CodeMirror from "@uiw/react-codemirror";
 
 import { javascript } from "@codemirror/lang-javascript";
 import { historyField } from "@codemirror/commands";
+
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
-import EditorContext from "../context/provider";
 
-import "./code-editor.css";
-import ErrorBar from "../error-bar/error-bar";
-import { globalStateContext } from "../context/provider";
+import EditorContext from "./provider";
+import ErrorBar from "./error-bar";
 
 const stateFields = { history: historyField };
 
 const CodeEditor = (props) => {
-  // set globalStateContext
-  // const gstate = React.useContext(globalStateContext);
   const { code, setCode } = React.useContext(EditorContext);
-  // console.log("code:", { code });
-
   const serializedState = localStorage.getItem("myEditorState");
   const [err, setErr] = useState("");
   const [theme, setTheme] = useState(xcodeDark);
@@ -53,10 +48,10 @@ const CodeEditor = (props) => {
   let dd = {};
   const makePdf = () => {
     try {
-      console.log("code type: ", typeof (code))
+      console.log("code type: ", typeof code);
       const docDefinition = eval(code);
-      console.log("docDefinition: ", docDefinition)
-      console.log("docDefinition type: ", typeof (docDefinition))
+      console.log("docDefinition: ", docDefinition);
+      console.log("docDefinition type: ", typeof docDefinition);
       const pdfDocGenerator = pdfMake.createPdf(docDefinition);
       pdfDocGenerator.getDataUrl((dataUrl) => {
         const targetElement = document.getElementById("pdfView");
@@ -75,7 +70,7 @@ const CodeEditor = (props) => {
 
   const handleChange = (val, viewUpdate) => {
     // setValue(val);
-    setCode(val)
+    setCode(val);
     // localStorage.setItem("myValue", value.replace("var dd", "dd"));
     // const state = viewUpdate.state.toJSON(stateFields);
     // localStorage.setItem("myEditorState", JSON.stringify(state));
