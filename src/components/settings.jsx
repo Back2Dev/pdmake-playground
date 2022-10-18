@@ -1,4 +1,4 @@
-import { Button, ClickAwayListener, Grow, Paper, Popper, MenuItem, MenuList, Box, FormControlLabel, Switch } from '@mui/material';
+import { Button, ClickAwayListener, Grow, Paper, Popper, MenuItem, MenuList, Box, FormControlLabel, Switch, Tooltip } from '@mui/material';
 import React from 'react'
 import { AiOutlineSetting } from "react-icons/ai";
 import EditorContext from "./provider";
@@ -50,17 +50,20 @@ const Settings = () => {
   return (
     <>
       <div>
-        <Button
-          ref={anchorRef}
-          id="settings-button"
-          aria-controls={open ? 'settings-menu' : undefined}
-          aria-expanded={open ? 'true' : undefined}
-          aria-haspopup="true"
-          onClick={handleToggle}
-          sx={{ fontSize: "2rem", fontWeight: "bold", color: "white" }}
-        >
-          <AiOutlineSetting />
-        </Button>
+        <Tooltip title="Settings">
+
+          <Button
+            ref={anchorRef}
+            id="settings-button"
+            aria-controls={open ? 'settings-menu' : undefined}
+            aria-expanded={open ? 'true' : undefined}
+            aria-haspopup="true"
+            onClick={handleToggle}
+            sx={{ fontSize: "2rem", fontWeight: "bold", color: "white" }}
+          >
+            <AiOutlineSetting />
+          </Button>
+        </Tooltip>
         <Popper
           open={open}
           anchorEl={anchorRef.current}
