@@ -111,6 +111,7 @@ const CodeEditor = (props) => {
                     onClick={formatCode}
                     data-cy="format"
                     variant="outlined"
+                    style={{ margin: "0px", padding: "0px", height: "3vh" }}
                   >
                     Format
                   </Button>

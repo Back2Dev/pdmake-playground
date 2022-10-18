@@ -61,7 +61,10 @@ const Header = () => {
       </div>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
-          <Toolbar disableGutters>
+          <Toolbar
+            disableGutters
+            style={{ minHeight: "5vh", maxHeight: "5vh" }}
+          >
             <Box sx={{ flexGrow: 0 }} ml="15px">
               <Tooltip title="Open File">
                 <Button
