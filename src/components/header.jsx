@@ -20,24 +20,34 @@ import EditorContext from "./provider";
 import Settings from "./settings";
 
 const Header = () => {
-  const files = ["new file", "save", "list"];
 
   const { filename, setFilename } = React.useContext(EditorContext);
+  const { code, setCode } = React.useContext(EditorContext);
+
+
+  // menu states
   const [anchorfile, setAnchorfile] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElPdf, setAnchorElPdf] = React.useState(null);
 
   const handleOpenfile = (event) => {
     setAnchorfile(event.currentTarget);
   };
 
   const handleClosefile = (event) => {
-    setFilename(event.target.innerText);
+    setFilename(event.target.value);
     setAnchorfile(null);
   };
 
-  // menu states
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElPdf, setAnchorElPdf] = React.useState(null);
-
+  const handleNewfile = (event) => {
+    setCode(`dd = {
+      content: [
+        
+      ]
+    }`)
+    setFilename(event.target.innerText);
+    setAnchorfile(null);
+  }
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -51,6 +61,7 @@ const Header = () => {
   };
 
   const handleClosePdfMenu = (event) => {
+    console.log("handling closing pdf menu")
     setAnchorElPdf(null);
   };
 
@@ -66,7 +77,7 @@ const Header = () => {
             style={{ minHeight: "5vh", maxHeight: "5vh" }}
           >
             <Box sx={{ flexGrow: 0 }} ml="15px">
-              <Tooltip title="Open File">
+              <Tooltip title="File Options">
                 <Button
                   size="large"
                   onClick={handleOpenfile}
@@ -92,18 +103,17 @@ const Header = () => {
                 open={Boolean(anchorfile)}
                 onClose={handleClosefile}
               >
-                {files.map((file) => (
-                  <MenuItem key={file} onClick={handleClosefile}>
-                    <Typography textAlign="center">{file}</Typography>
-                  </MenuItem>
-                ))}
+                <MenuItem onClick={handleNewfile}>
+                  <Typography textAlign="center">New File</Typography>
+                </MenuItem>
+
               </Menu>
             </Box>
 
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "flex", lg: "none" } }}>
               <IconButton
                 size="large"
-                aria-label="account of current user"
+                aria-label="sample-files"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleOpenNavMenu}
@@ -126,17 +136,17 @@ const Header = () => {
                 open={Boolean(anchorElNav)}
                 onClose={handleCloseNavMenu}
                 sx={{
-                  display: { xs: "flex", md: "none" },
+                  display: { xs: "flex", md: "flex" },
                   direction: "column",
                   color: "inherit",
                   my: 2,
                 }}
               >
-                <SampleFiles />
+                <SampleFiles handleCloseNavMenu={handleCloseNavMenu} />
               </Menu>
             </Box>
 
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "none", lg: "flex" } }}>
               <SampleFiles />
             </Box>
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -171,7 +181,7 @@ const Header = () => {
                   my: 2,
                 }}
               >
-                <PdfOptions />
+                <PdfOptions handleClosePdfMenu={handleClosePdfMenu} />
               </Menu>
             </Box>
             <Box
