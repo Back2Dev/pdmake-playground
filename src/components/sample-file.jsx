@@ -13,7 +13,7 @@ import lists from "./sample-files/lists";
 import margin from "./sample-files/margin";
 import images from "./sample-files/images";
 
-const SampleFiles = () => {
+const SampleFiles = (props) => {
   const samples = {
     BASICS: basics,
     STYLE1: styles1,
@@ -38,7 +38,7 @@ const SampleFiles = () => {
     <>
       {Object.keys(samples).map((sample) => {
         return (
-          <MenuItem key={sample}>
+          <MenuItem key={sample} onClick={props.handleCloseNavMenu}>
             <Button
               key={sample}
               value={sample}

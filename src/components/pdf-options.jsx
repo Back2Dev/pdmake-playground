@@ -2,7 +2,7 @@ import React from "react";
 import { Button, MenuItem } from "@mui/material";
 import EditorContext from "./provider";
 
-const PdfOptions = () => {
+const PdfOptions = (props) => {
   const { code, setCode } = React.useContext(EditorContext);
 
   const buttonStyle = {
@@ -16,7 +16,7 @@ const PdfOptions = () => {
 
   return (
     <>
-      <MenuItem>
+      <MenuItem onClick={props.handleClosePdfMenu}>
         <Button
           variant="text"
           onClick={() => pdfMake.createPdf(eval(code)).open()}
@@ -26,7 +26,7 @@ const PdfOptions = () => {
           OPEN
         </Button>
       </MenuItem>
-      <MenuItem>
+      <MenuItem onClick={props.handleClosePdfMenu}>
         <Button
           variant="text"
           onClick={() => pdfMake.createPdf(eval(code)).print()}
@@ -35,8 +35,8 @@ const PdfOptions = () => {
         >
           PRINT
         </Button>
-      </MenuItem>
-      <MenuItem>
+      </MenuItem >
+      <MenuItem onClick={props.handleClosePdfMenu}>
         <Button
           variant="text"
           onClick={() => pdfMake.createPdf(eval(code)).download()}
