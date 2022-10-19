@@ -1,5 +1,4 @@
-const js = `// playground requires you to assign document definition to a variable called dd
-
+const js = `
 dd = {
   footer: {
     columns: [
