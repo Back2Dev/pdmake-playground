@@ -25,13 +25,24 @@ const SampleFiles = (props) => {
     MARGIN: margin,
     IMAGES: images,
   };
-  const { code, setCode } = React.useContext(EditorContext);
+  const { code, setCode, setDirty } = React.useContext(EditorContext);
   const { filename, setFilename } = React.useContext(EditorContext);
+
+  const [loadingstate, setLoadingState] = React.useState(false);
+
+  const loading = () => {
+    setLoadingState(true);
+    setTimeout(() => {
+      setLoadingState(false);
+    }, 0);
+  };
 
   const openDoc = (e) => {
     console.log(`Loading ${e.target.value}`);
     setFilename(e.target.value);
     setCode(samples[e.target.value]);
+    setDirty(true);
+    loading();
   };
 
   return (
@@ -55,6 +66,7 @@ const SampleFiles = (props) => {
                 fontSize: "0.65rem",
               }}
               data-cy={sample}
+              disabled={loadingstate}
             >
               {sample}
             </Button>

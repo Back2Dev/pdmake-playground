@@ -19,7 +19,7 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const CodeEditor = (props) => {
-  const { code, setCode } = React.useContext(EditorContext);
+  const { code, setCode, dirty, setDirty } = React.useContext(EditorContext);
   const { editor, setEditor } = React.useContext(EditorContext);
   const { darktheme, setDarkTheme } = React.useContext(EditorContext);
   const [err, setErr] = useState("");
@@ -42,16 +42,29 @@ const CodeEditor = (props) => {
     } catch (e) {
       console.log("error message: ", e);
       setErr(`Error: ${e.message}`);
+    } finally {
+      setDirty(false);
     }
   };
 
   useEffect(() => {
     makePdf();
+  }, [code]);
+
+  // set drity true
+  // const [dirty, setDirty] = useState(false);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (dirty) {
+        makePdf();
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const handleChange = (val, viewUpdate) => {
     setCode(val);
-    makePdf();
   };
 
   const debouncedOnChange = debounce(handleChange, 1000);
@@ -66,7 +79,7 @@ const CodeEditor = (props) => {
       parser: "babel",
       plugins: [babelParser],
     });
-    setCode(formatted);
+    // setCode(formatted);
   };
 
   return (
