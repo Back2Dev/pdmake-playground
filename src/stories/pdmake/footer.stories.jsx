@@ -1,12 +1,12 @@
-import React from 'react';
-import Footer from '../components/footer/footer';
+import React from "react";
+import Footer from "../../components/footer";
 
 export default {
-  title: 'Example/Footer',
+  title: "pdmake/Footer",
   component: Footer,
   argTypes: {
-    bgColor: { control: 'color' },
-    fColor: { control: 'color' }
+    bgColor: { control: "color" },
+    fColor: { control: "color" },
   },
 };
 
@@ -15,61 +15,59 @@ const Template = (args) => <Footer {...args} />;
 export const Right = Template.bind({});
 
 Right.args = {
-  alignment: 'right'
+  alignment: "right",
 };
 export const Left = Template.bind({});
 
 Left.args = {
-  alignment: 'left'
+  alignment: "left",
 };
 
 export const Center = Template.bind({});
 
 Center.args = {
-  alignment: 'center'
+  alignment: "center",
 };
 
 export const Small = Template.bind({});
 
 Small.args = {
-  fSize: 'small'
+  fSize: "small",
 };
 
 export const Medium = Template.bind({});
 
 Medium.args = {
-  fSize: 'medium'
+  fSize: "medium",
 };
 
 export const Large = Template.bind({});
 
 Large.args = {
-  fSize: 'large',
+  fSize: "large",
 };
 
 export const BgGrey = Template.bind({});
 
 BgGrey.args = {
-  bgColor: 'grey'
+  bgColor: "grey",
 };
 
 export const BgBlue = Template.bind({});
 
 BgBlue.args = {
-  bgColor: '#1c76d2'
+  bgColor: "#1c76d2",
 };
 
 export const BgWhite = Template.bind({});
 
 BgWhite.args = {
-  fColor: 'black',
-  bgColor: 'white'
+  fColor: "black",
+  bgColor: "white",
 };
 
 export const BgBlack = Template.bind({});
 
 BgBlack.args = {
-  bgColor: 'black',
+  bgColor: "black",
 };
-
-

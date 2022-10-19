@@ -1,9 +1,9 @@
-import React from 'react';
-import Navbar from '../../components/navbar/navbar';
-import '../../components/navbar/navbar.css';
+import React from "react";
+import Navbar from "../navbar/navbar";
+import "../navbar/navbar.css";
 
 export default {
-  title: 'pdmake/Navbar',
+  title: "pdmake/Navbar",
   component: Navbar,
   // argTypes: {
   //   color: {control: 'color'},
