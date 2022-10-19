@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import Split from "react-split";
-import { debounce } from "lodash";
 
 import { Box, Button, Grid, TextField, FormGroup } from "@mui/material";
 import CodeMirror from "@uiw/react-codemirror";
@@ -32,7 +31,7 @@ const CodeEditor = () => {
 
   const makePdf = () => {
     try {
-      console.log(code)
+      console.log(code);
       const docDefinition = eval(code);
       const pdfDocGenerator = pdfMake.createPdf(docDefinition);
       pdfDocGenerator.getDataUrl((dataUrl) => {
@@ -47,15 +46,14 @@ const CodeEditor = () => {
   };
 
   useEffect(() => {
-    makePdf();
-  }, [code]);
+    const interval = setInterval(() => {
+      if (dirty) {
+        makePdf();
+      }
+    }, 1000);
 
-  const handleChange = (val, viewUpdate) => {
-    setCode(val)
-    console.log(val)
-  };
-
-  const debouncedOnChange = debounce(handleChange, 100);
+    return () => clearInterval(interval);
+  }, []);
 
   const formatCode = () => {
     const formatted = prettier.format(code, {
@@ -76,14 +74,12 @@ const CodeEditor = () => {
         <Box width="100vw">
           <Split className="split">
             <Grid item>
-              <Box
-                sx={{ bgcolor: "#2a313e", height: "100%", color: "#ffffff" }}
-              >
+              <Box sx={{ bgcolor: "#2a313e", height: "100%", color: "#ffffff" }}>
                 {editor && (
                   <CodeMirror
                     value={`${code}`}
                     ref={cmRef}
-                    onChange={debouncedOnChange}
+                    onChange={(val, viewUpdate) => setCode(val)}
                     extensions={[javascript({ jsx: true })]}
                     basicSetup={{
                       dropCursor: false,
