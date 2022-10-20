@@ -1,7 +1,7 @@
 import { Button, ClickAwayListener, Grow, Paper, Popper, MenuItem, MenuList, Box, FormControlLabel, Switch, Tooltip } from '@mui/material';
 import React from 'react'
 import { AiOutlineSetting } from "react-icons/ai";
-import EditorContext from "./provider";
+import EditorContext from "../provider";
 
 const Settings = () => {
 

@@ -33,6 +33,11 @@ function editorReducer(state, action) {
         ...state,
         dirty: payload,
       };
+    case "setErr":
+      return {
+        ...state,
+        err: payload,
+      };
     default:
       return state;
   }
@@ -46,6 +51,7 @@ export const EditorProvider = ({ children, source }) => {
     darktheme: true,
     editor: true,
     dirty: false,
+    err: ""
   });
   const setCode = (data) => {
     dispatch({ type: "setCode", payload: data });
@@ -62,7 +68,9 @@ export const EditorProvider = ({ children, source }) => {
   const setDirty = (data) => {
     dispatch({ type: "setDirty", payload: data });
   };
-
+  const setErr = (data) => {
+    dispatch({ type: "setErr", payload: data });
+  }
   return (
     <EditorContext.Provider
       value={{
@@ -72,6 +80,7 @@ export const EditorProvider = ({ children, source }) => {
         setEditor,
         setDarkTheme,
         setDirty,
+        setErr
       }}
     >
       {children}

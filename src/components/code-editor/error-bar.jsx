@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import EditorContext from "../provider";
 
 const errStyle = {
   color: "red",
@@ -8,19 +9,24 @@ const errStyle = {
   height: "fit-content",
 };
 
-const ErrorBar = ({ errorMessage, ...props }) => (
-  <div
-    style={
-      errorMessage
-        ? errStyle
-        : {
+const ErrorBar = () => {
+  const { err } = React.useContext(EditorContext);
+
+  return (
+    <div
+      data-cy="error-bar"
+      style={
+        err
+          ? errStyle
+          : {
             display: "none",
           }
-    }
-  >
-    {errorMessage}
-  </div>
-);
+      }
+    >
+      {err}
+    </div>
+  )
+};
 
 ErrorBar.propTypes = {
   errorMessage: PropTypes.string,
