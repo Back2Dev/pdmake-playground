@@ -1,7 +1,7 @@
 import React from "react";
 import ErrorBar from "./error-bar";
-import { EditorProvider } from "../provider";
-import '../index.css'
+import { EditorProvider } from "./provider";
+import './index.css'
 
 export default {
   title: "pdmake/ErrorBar",

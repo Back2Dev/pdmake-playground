@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import CodeEditor from './code-editor/code-editor';
-import Preview from './preview/preview';
+import CodeEditor from './code-editor';
+import Preview from './preview';
 import EditorContext from './provider';
 import Split from "react-split";
 import { Box, Grid } from "@mui/material";

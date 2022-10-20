@@ -1,5 +1,5 @@
 import React from 'react'
-import EditorContext from "../provider";
+import EditorContext from "./provider";
 import { FormGroup, Button } from '@mui/material';
 import prettier from "prettier/standalone";
 import babelParser from "prettier/parser-babel";

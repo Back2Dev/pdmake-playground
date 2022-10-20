@@ -1,5 +1,5 @@
 import React from 'react'
-import EditorContext from "../provider";
+import EditorContext from "./provider";
 import TextEditor from "./text-editor";
 import CodeMirror from './code-mirror';
 import ErrorBar from './error-bar';

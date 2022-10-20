@@ -1,7 +1,7 @@
 import React from "react";
-import Playground from "../../components/index"
-import { EditorProvider } from "../../components/provider";
-import '../../components/index.css';
+import Playground from "../../components/code-editor/index"
+import { EditorProvider } from "../../components/code-editor/provider";
+import '../../components/code-editor/index.css';
 import Q1 from "./map-forms/q1"
 import Q2 from "./map-forms/q2"
 import Q4 from "./map-forms/q4"

@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, MenuItem } from "@mui/material";
-import EditorContext from "../components/provider";
+import EditorContext from "../components/code-editor/provider";
 
 // import sample files
 import basics from "./sample-files/basics";

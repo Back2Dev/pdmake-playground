@@ -1,7 +1,7 @@
 import { Button, ClickAwayListener, Grow, Paper, Popper, MenuItem, MenuList, FormControlLabel, Switch, Tooltip } from '@mui/material';
 import React from 'react'
 import { AiOutlineSetting } from "react-icons/ai";
-import EditorContext from "../components/provider";
+import EditorContext from "../components/code-editor/provider";
 
 const Settings = () => {
   const { darktheme, setDarkTheme } = React.useContext(EditorContext);

@@ -16,7 +16,7 @@ import FileOpenIcon from "@mui/icons-material/FileOpen";
 // Components
 import PdfOptions from "./pdf-options";
 import SampleFiles from "./sample-file";
-import EditorContext from "../components/provider";
+import EditorContext from "../components/code-editor/provider";
 import Settings from "./settings";
 
 const Header = () => {
