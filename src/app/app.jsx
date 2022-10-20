@@ -1,7 +1,7 @@
-import Header from "../components/header/header";
-import Footer from "../components/footer/footer";
+import Header from "../header/header";
+import Footer from "../footer/footer";
 import { EditorProvider } from "../components/provider";
-import Playground from "../playground/playground";
+import Playground from "../components/index";
 
 const App = () => {
   return (

@@ -51,7 +51,7 @@ export const EditorProvider = ({ children, source }) => {
     darktheme: true,
     editor: true,
     dirty: false,
-    err: ""
+    err: source || ""
   });
   const setCode = (data) => {
     dispatch({ type: "setCode", payload: data });

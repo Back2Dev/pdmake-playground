@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
-import CodeEditor from '../components/code-editor/code-editor';
-import Preview from '../components/preview/preview';
-import EditorContext from '../components/provider';
+import CodeEditor from './code-editor/code-editor';
+import Preview from './preview/preview';
+import EditorContext from './provider';
 import Split from "react-split";
 import { Box, Grid } from "@mui/material";
 import pdfMake from "pdfmake/build/pdfmake";

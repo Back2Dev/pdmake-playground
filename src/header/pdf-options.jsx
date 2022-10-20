@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, MenuItem } from "@mui/material";
-import EditorContext from "../provider";
+import EditorContext from "../components/provider";
 
 const PdfOptions = (props) => {
   const { code } = React.useContext(EditorContext);
