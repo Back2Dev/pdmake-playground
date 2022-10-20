@@ -1,0 +1,24 @@
+footer: {
+	fontSize: 7,
+	layout: 'noBorders',
+	table: { 
+			widths: [30, '*', '*', 30],
+				body: [
+			['','',{
+					bold: true, 
+					alignment: 'right', 
+					fontSize: 9,
+					text: '(Please keep a copy of this form)'
+					
+			},''],
+			['',{
+					text:'1035629(3) Updated: Tue Jul 19 00:35:38 2022'
+					
+			},
+			{
+					alignment: 'right', 
+					text:'Copyright © 2012 Management Action Programs, Inc. All right reserved.'
+			},'']
+		]
+		}
+}
