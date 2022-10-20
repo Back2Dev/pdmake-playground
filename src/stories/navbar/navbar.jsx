@@ -1,18 +1,16 @@
-import React from "react";
-import {Box} from "@mui/material";
-import {AppBar, Toolbar, Typography, IconButton, Menu, MenuItem, Button, Tooltip} from "@mui/material";
-import MenuIcon from '@mui/icons-material/Menu';
-import FileOpenIcon from '@mui/icons-material/FileOpen';
-import {Link} from "react-router-dom";
+import React from 'react'
+import { Box, AppBar, Toolbar, Button, IconButton, Typography, Menu, MenuItem, Tooltip } from '@mui/material'
+import MenuIcon from '@mui/icons-material/Menu'
+import FileOpenIcon from '@mui/icons-material/FileOpen'
 
+import './Navbar.css'
 
 const pages = ["New"];
 
 const files = ["File 1", "File 2", "File 3", "File 4"];
 
-const Header = () => {
 
-  // file states
+const Navbar = () => {
 
   const [anchorfile, setAnchorfile] = React.useState(null);
 
@@ -37,10 +35,7 @@ const Header = () => {
   };
 
   return (
-    <div className="header">
-      <div className="header_logo">
-        <a href="/">Back2dev</a>
-      </div>
+    <div className="navbar">
       <Box sx={{flexGrow: 1}}>
         <AppBar position="static">
           <Toolbar disableGutters>
@@ -135,7 +130,7 @@ const Header = () => {
         </AppBar>
       </Box>
     </div>
-  );
-};
+  )
+}
 
-export default Header;
+export default Navbar
