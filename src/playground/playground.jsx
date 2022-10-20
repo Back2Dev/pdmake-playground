@@ -6,13 +6,9 @@ import Split from "react-split";
 import { Box, Grid } from "@mui/material";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-
-
-
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const Playground = () => {
-
   const { code, setErr } = React.useContext(EditorContext)
   let dd = {};
   const makePdf = () => {
@@ -30,7 +26,6 @@ const Playground = () => {
       setErr(`Error: ${e.message}`);
     }
   };
-
   // useEffect(() => {
   //   const interval = setInterval(() => {
   //     if (dirty) {
@@ -40,11 +35,9 @@ const Playground = () => {
 
   //   return () => clearInterval(interval);
   // }, []);
-
   useEffect(() => {
     makePdf()
   }, [code]);
-
   return (
     <>
       <Grid container className="main-area">

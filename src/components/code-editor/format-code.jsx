@@ -5,9 +5,7 @@ import prettier from "prettier/standalone";
 import babelParser from "prettier/parser-babel";
 
 const FormatCode = () => {
-
   const { code, setCode } = React.useContext(EditorContext);
-
   const formatCode = () => {
     const formatted = prettier.format(code, {
       useTabs: false,
@@ -21,7 +19,6 @@ const FormatCode = () => {
     console.log("formatted:", formatted);
     setCode(formatted);
   };
-
   return (
     <>
       <FormGroup>
@@ -35,7 +32,6 @@ const FormatCode = () => {
         </Button>
       </FormGroup>
     </>
-
   )
 }
 

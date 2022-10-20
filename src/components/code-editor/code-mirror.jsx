@@ -4,14 +4,10 @@ import { xcodeLight, xcodeDark } from "@uiw/codemirror-theme-xcode";
 import { javascript } from "@codemirror/lang-javascript";
 import EditorContext from "../provider";
 
-
-
 const CodeMirror = () => {
-
   const { darktheme, code, setCode } = React.useContext(EditorContext);
   const theme = darktheme ? xcodeDark : xcodeLight;
   const cmRef = useRef(null);
-
   return (
     <>
       <CodeMirrorComp

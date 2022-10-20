@@ -25,18 +25,14 @@ const SampleFiles = (props) => {
     MARGIN: margin,
     IMAGES: images,
   };
-  const { code, setCode, setDirty } = React.useContext(EditorContext);
-  const { filename, setFilename } = React.useContext(EditorContext);
-
+  const { setCode, setDirty, setFilename } = React.useContext(EditorContext);
   const [loadingstate, setLoadingState] = React.useState(false);
-
   const loading = () => {
     setLoadingState(true);
     setTimeout(() => {
       setLoadingState(false);
     }, 0);
   };
-
   const openDoc = (e) => {
     console.log(`Loading ${e.target.value}`);
     setFilename(e.target.value);
@@ -44,7 +40,6 @@ const SampleFiles = (props) => {
     setDirty(true);
     loading();
   };
-
   return (
     <>
       {Object.keys(samples).map((sample) => {

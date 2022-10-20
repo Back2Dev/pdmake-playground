@@ -21,22 +21,19 @@ import Settings from "./settings";
 
 const Header = () => {
   const { filename, setFilename } = React.useContext(EditorContext);
-  const { code, setCode } = React.useContext(EditorContext);
+  const { setCode } = React.useContext(EditorContext);
 
   // menu states
   const [anchorfile, setAnchorfile] = React.useState(null);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElPdf, setAnchorElPdf] = React.useState(null);
-
   const handleOpenfile = (event) => {
     setAnchorfile(event.currentTarget);
   };
-
   const handleClosefile = (event) => {
     setFilename(event.target.value);
     setAnchorfile(null);
   };
-
   const handleNewfile = (event) => {
     setCode(`dd = {
       content: [
@@ -49,7 +46,6 @@ const Header = () => {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-
   const handleCloseNavMenu = (event) => {
     setFilename(event.target.value);
     setAnchorElNav(null);
@@ -57,12 +53,9 @@ const Header = () => {
   const handleOpenPdfMenu = (event) => {
     setAnchorElPdf(event.currentTarget);
   };
-
-  const handleClosePdfMenu = (event) => {
-    console.log("handling closing pdf menu");
+  const handleClosePdfMenu = () => {
     setAnchorElPdf(null);
   };
-
   return (
     <div className="header">
       <div className="header_logo">
@@ -106,7 +99,6 @@ const Header = () => {
                 </MenuItem>
               </Menu>
             </Box>
-
             <Box
               sx={{
                 flexGrow: 1,
@@ -148,7 +140,6 @@ const Header = () => {
                 <SampleFiles handleCloseNavMenu={handleCloseNavMenu} />
               </Menu>
             </Box>
-
             <Box
               sx={{
                 flexGrow: 1,

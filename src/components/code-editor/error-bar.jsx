@@ -11,7 +11,6 @@ const errStyle = {
 
 const ErrorBar = () => {
   const { err } = React.useContext(EditorContext);
-
   return (
     <div
       data-cy="error-bar"

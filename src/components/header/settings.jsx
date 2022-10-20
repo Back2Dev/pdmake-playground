@@ -1,27 +1,22 @@
-import { Button, ClickAwayListener, Grow, Paper, Popper, MenuItem, MenuList, Box, FormControlLabel, Switch, Tooltip } from '@mui/material';
+import { Button, ClickAwayListener, Grow, Paper, Popper, MenuItem, MenuList, FormControlLabel, Switch, Tooltip } from '@mui/material';
 import React from 'react'
 import { AiOutlineSetting } from "react-icons/ai";
 import EditorContext from "../provider";
 
 const Settings = () => {
-
   const { darktheme, setDarkTheme } = React.useContext(EditorContext);
   const { editor, setEditor } = React.useContext(EditorContext);
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
-
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
-
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
-
     setOpen(false);
   };
-
   function handleListKeyDown(event) {
     if (event.key === 'Tab') {
       event.preventDefault();
@@ -35,23 +30,18 @@ const Settings = () => {
     if (prevOpen.current === true && open === false) {
       anchorRef.current.focus();
     }
-
     prevOpen.current = open;
   }, [open]);
-
   const toggleEditor = () => {
     setEditor(!editor);
   };
   const toggleTheme = () => {
     setDarkTheme(!darktheme);
   };
-
-
   return (
     <>
       <div>
         <Tooltip title="Settings">
-
           <Button
             ref={anchorRef}
             id="settings-button"

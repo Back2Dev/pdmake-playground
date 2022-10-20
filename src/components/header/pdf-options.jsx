@@ -3,16 +3,13 @@ import { Button, MenuItem } from "@mui/material";
 import EditorContext from "../provider";
 
 const PdfOptions = (props) => {
-  const { code, setCode } = React.useContext(EditorContext);
-
+  const { code } = React.useContext(EditorContext);
   const buttonStyle = {
     color: "inherit",
     fontWeight: "bold",
     fontSize: "0.65rem",
   };
-
   let dd;
-
   return (
     <>
       <MenuItem onClick={props.handleClosePdfMenu}>

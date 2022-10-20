@@ -1,11 +1,9 @@
 import React, { useRef } from 'react'
 import EditorContext from "../provider";
 
-
 const TextEditor = () => {
   const { code } = React.useContext(EditorContext);
   const taRef = useRef(null);
-
   return (
     <>
       <textarea
