@@ -9,7 +9,7 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const Playground = () => {
-  const { code, setErr } = React.useContext(EditorContext)
+  const { code, setErr, setDirty } = React.useContext(EditorContext)
   let dd = {};
   const makePdf = () => {
     try {
@@ -20,6 +20,7 @@ const Playground = () => {
         const targetElement = document.getElementById("pdfView");
         targetElement.src = dataUrl;
         setErr("");
+        setDirty(false)
       });
     } catch (e) {
       console.log("error message: ", e);
