@@ -18,7 +18,7 @@ import * as pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const Playground = () => {
-  const { cmeditor, err, setErr, code, setCode, darktheme, setDirty } = React.useContext(EditorContext);
+  const { cmeditor, err, setErr, code, setCode, darktheme, setDirty, } = React.useContext(EditorContext);
   const editor = useRef();
   const view = useRef();
   const taRef = useRef(null);
@@ -80,7 +80,6 @@ const Playground = () => {
 
   useEffect(() => {
     if (view.current && view.current.state.doc.toString() !== code) {
-      console.log("updated data")
       view.current.dispatch({
         changes: { from: 0, to: view.current.state.doc.length, insert: code }
       });
@@ -98,14 +97,12 @@ const Playground = () => {
       parser: "babel",
       plugins: [babelParser],
     });
-    console.log("formatted:", formatted);
     setCode(formatted);
   };
 
   let dd = {};
   const makePdf = () => {
     try {
-      console.log(code);
       const docDefinition = eval(code);
       const pdfDocGenerator = pdfMake.createPdf(docDefinition);
       pdfDocGenerator.getDataUrl((dataUrl) => {
@@ -119,15 +116,6 @@ const Playground = () => {
       setErr(`Error: ${e.message}`);
     }
   };
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     if (dirty) {
-  //       makePdf();
-  //     }
-  //   }, 1000);
-
-  //   return () => clearInterval(interval);
-  // }, []);
   useEffect(() => {
     makePdf();
   }, [code]);
