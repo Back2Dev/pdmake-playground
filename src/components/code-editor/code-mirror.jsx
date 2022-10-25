@@ -2,16 +2,19 @@ import React, { useRef, useEffect } from "react";
 import { EditorState } from '@codemirror/state';
 import { EditorView, keymap } from '@codemirror/view';
 import { defaultKeymap, indentWithTab } from '@codemirror/commands';
-import { autoCloseTags, javascript } from '@codemirror/lang-javascript';
+import { javascript } from '@codemirror/lang-javascript';
 import { oneDarkTheme } from '@codemirror/theme-one-dark';
 import { basicSetup } from 'codemirror';
 import EditorContext from "./provider";
 import { lintKeymap, } from "@codemirror/lint";
 
-export const Editor = () => {
+export const Editor = ({ onChange }) => {
 
   const editor = useRef();
-  const { darktheme, code, setCode, setDirty, dirty } = React.useContext(EditorContext);
+
+  const view = useRef();
+  const { darktheme, code } = React.useContext(EditorContext);
+
   let myTheme = EditorView.theme({
     "&": {
       color: "#034",
@@ -33,10 +36,9 @@ export const Editor = () => {
     }
   }, { dark: true })
 
-  const onUpdate = EditorView.updateListener.of((v) => {
-    setCode(v.state.doc.toString());
-    setDirty(true);
-  });
+  const onUpdate = EditorView.updateListener.of(({ state }) => {
+    onChange({ target: { value: state.doc.toString() } });
+  })
 
   const theme = darktheme ? oneDarkTheme : myTheme;
 
@@ -48,17 +50,24 @@ export const Editor = () => {
         keymap.of([defaultKeymap, indentWithTab, lintKeymap]),
         onUpdate,
         javascript(),
-        autoCloseTags,
         theme,
       ],
     });
 
-    const view = new EditorView({ state: startState, parent: editor.current });
+    view.current = new EditorView({ state: startState, parent: editor.current });
 
     return () => {
-      view.destroy();
+      view.current.destroy();
     };
-  }, [dirty, theme]);
+  }, []);
+
+  useEffect(() => {
+    if (view.current && view.current.state.doc.toString() !== code) {
+      view.current.dispatch({
+        changes: { from: 0, to: view.current.state.doc.length, insert: code }
+      });
+    }
+  }, [code])
 
   return <div ref={editor}></div>;
 }

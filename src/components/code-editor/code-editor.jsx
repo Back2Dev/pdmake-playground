@@ -6,12 +6,11 @@ import FormatCode from './format-code';
 import { Editor } from './code-mirror'
 
 const CodeEditor = () => {
-  const { editor, err } = React.useContext(EditorContext);
+  const { editor, err, code, setCode } = React.useContext(EditorContext);
 
   return (
     <>
-      {editor && <Editor
-      />}
+      {editor && <Editor onChange={(e) => setCode(e.target.value)} />}
       {!editor && <TextEditor />}
       {err && <ErrorBar />}
       <FormatCode />

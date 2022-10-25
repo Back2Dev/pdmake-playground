@@ -14,7 +14,6 @@
   "dependencies": {
     "@babel/parser": "^7.19.4",
     "@babel/runtime": "^7.19.4",
-    "@codemirror/basic-setup": "^0.20.0",
     "@codemirror/commands": "^6.1.2",
     "@codemirror/lang-javascript": "^6.1.0",
     "@codemirror/lint": "^6.0.0",
@@ -28,10 +27,6 @@
     "@mui/material": "^5.10.7",
     "@react-icons/all-files": "^4.1.0",
     "codemirror": "^6.0.1",
-    "jshint": "^2.13.5",
-    "jsonlint-mod": "^1.7.6",
-    "lodash": "^4.17.21",
-    "lodash.debounce": "^4.0.8",
     "pdf-lib": "^1.17.1",
     "pdfmake": "^0.2.5",
     "prettier": "^2.1.2",
