@@ -22,7 +22,6 @@ const Playground = () => {
   const editor = useRef();
   const view = useRef();
   const taRef = useRef(null);
-
   const errStyle = {
     color: "red",
     backgroundColor: "blanchedalmond",
@@ -115,6 +114,7 @@ const Playground = () => {
       setErr(`Error: ${e.message}`);
     }
   };
+
   useEffect(() => {
     makePdf();
   }, [code]);
