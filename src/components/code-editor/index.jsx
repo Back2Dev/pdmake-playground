@@ -89,10 +89,6 @@ const Playground = () => {
     }
   }, [code]);
 
-  useEffect(() => {
-    taRef.current.value = code;
-  }, []);
-
   const formatCode = () => {
     const formatted = prettier.format(code, {
       useTabs: false,
@@ -107,6 +103,7 @@ const Playground = () => {
   };
 
   let dd = {};
+
   const makePdf = () => {
     try {
       const docDefinition = eval(code);
@@ -125,6 +122,7 @@ const Playground = () => {
   useEffect(() => {
     makePdf();
   }, [code]);
+
   return (
     <>
       <Grid container className="main-area">
