@@ -34,6 +34,13 @@ h1 {
   border-left: 0.25rem solid #323639;
   border-bottom: 0.25rem solid #323639;
 }
+.text-editor {
+  height: calc(100vh - 194px);
+  border-top: 3.75rem solid #323639;
+  border-right: 0.25rem solid #323639;
+  border-left: 0.25rem solid #323639;
+  border-bottom: 0.25rem solid #323639;
+}
 
 .split {
   display: flex;
