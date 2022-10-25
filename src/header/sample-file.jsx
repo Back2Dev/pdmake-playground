@@ -47,7 +47,7 @@ const SampleFiles = (props) => {
           <MenuItem
             key={sample}
             onClick={props.handleCloseNavMenu}
-            style={{ minHeight: "5vh", maxHeight: "5vh" }}
+            style={{ minHeight: "48px", maxHeight: "48px" }}
           >
             <Button
               key={sample}

@@ -18,19 +18,17 @@
 body {
   margin: 0;
   min-width: 320px;
-  min-height: 100vh;
   color: #666;
   background: white !important;
 }
 
 h1 {
   font-size: 3.2em;
-  line-height: 1.1;
 }
 
 /* Code-Editor Style */
 .cm-editor {
-  height: 86vh;
+  height: calc(100vh - 121px);
   border-top: 3.75rem solid #323639;
   border-right: 0.25rem solid #323639;
   border-left: 0.25rem solid #323639;
@@ -58,23 +56,6 @@ iframe {
   border: 0;
 }
 
-.cm-content,
-.cm-gutter {
-  min-height: 150px;
-}
-
-.cm-gutters {
-  margin: 1px;
-}
-
-.cm-scroller {
-  overflow: auto;
-}
-
-.cm-wrap {
-  border: 1px solid silver;
-}
-
 /* Header style */
 .header {
   background-color: white;
@@ -83,16 +64,14 @@ iframe {
 }
 
 .header_logo {
-  /* padding-top: 10px;
-  padding-bottom: 5px; */
-  height: 4vh;
+  height: 35px;
 }
 
 .header_logo a {
   color: #0074c1;
   padding-left: 30px;
   font-size: 1.2rem;
-  line-height: 4vh;
+  line-height: 35px;
 }
 
 .header_logo a:hover {
@@ -104,7 +83,7 @@ iframe {
   font-size: 0.6rem;
   position: fixed;
   bottom: 0;
-  height: 2vh;
+  height: 18px;
   width: 100vw;
 }
 
