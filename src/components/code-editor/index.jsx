@@ -75,7 +75,7 @@ const Playground = () => {
     return () => {
       view.current.destroy();
     };
-  }, [darktheme]);
+  }, [darktheme, cmeditor]);
 
   useEffect(() => {
     if (view.current && view.current.state.doc.toString() !== code) {
@@ -126,7 +126,7 @@ const Playground = () => {
             <Grid item>
               <Box sx={{ bgcolor: "#2a313e", height: "100%", color: "#ffffff" }}>
                 {cmeditor && (
-                  <div ref={editor} onChange={onChange}></div>
+                  <div ref={editor} onChange={(e) => setCode(e.target.value)}></div>
                 )}
                 {!cmeditor && (
                   <textarea
