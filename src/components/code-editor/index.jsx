@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import EditorContext from "./provider";
 import Split from "react-split";
 import { Box, Grid, FormGroup, Button } from "@mui/material";
@@ -16,6 +16,7 @@ import { lintKeymap } from "@codemirror/lint";
 import pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import debounce from 'lodash.debounce';
 
 const Playground = () => {
   const { cmeditor, err, setErr, code, setCode, darktheme } =
@@ -54,10 +55,8 @@ const Playground = () => {
     { dark: true }
   );
 
-  const onChange = (e) => setCode(e.target.value);
-
   const onUpdate = EditorView.updateListener.of(({ state }) => {
-    onChange({ target: { value: state.doc.toString() } });
+    debouncedOnChange({ target: { value: state.doc.toString() } });
   });
 
   const theme = darktheme ? oneDarkTheme : myTheme;
@@ -119,6 +118,14 @@ const Playground = () => {
     }
   };
 
+  const onChange = event => {
+    console.log("onChange: ", event.target.value)
+    setCode(event.target.value);
+  };
+  const debouncedOnChange = useCallback(
+    debounce(onChange, 1000)
+    , []);
+
   useEffect(() => {
     makePdf();
   }, [code]);
@@ -131,7 +138,7 @@ const Playground = () => {
             <Grid item>
               <Box sx={{ bgcolor: "#2a313e", height: "100%", color: "#ffffff" }}>
                 {cmeditor && (
-                  <div ref={editor} onChange={(e) => setCode(e.target.value)}></div>
+                  <div ref={editor} onChange={debouncedOnChange}></div>
                 )}
                 {false && <div className="cm-editor" />}
                 {!cmeditor && (
@@ -143,9 +150,7 @@ const Playground = () => {
                     data-cy="typeinarea"
                     style={{ width: "100%" }}
                     value={code}
-                    onChange={(e) => {
-                      setCode(e.target.value);
-                    }}
+                    onChange={onChange}
                   >
                     {code}
                   </textarea>
@@ -157,8 +162,8 @@ const Playground = () => {
                       err
                         ? errStyle
                         : {
-                            display: "none",
-                          }
+                          display: "none",
+                        }
                     }
                   >
                     {err}
