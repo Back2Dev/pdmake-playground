@@ -1,6 +1,6 @@
 import React from "react";
 import ErrorBar from "./error-bar";
-import { EditorProvider } from "./provider";
+import { EditorProvider } from "../../components/code-editor/provider";
 import './index.css'
 
 export default {
