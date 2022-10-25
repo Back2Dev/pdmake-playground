@@ -7,7 +7,6 @@ export const Footer = ({
   fColor,
   alignment,
   fSize,
-  ...props
 }) => {
   return (
     <div

@@ -1,5 +1,5 @@
 import React from "react";
-import EditorContext from "./provider";
+import EditorContext from "../../components/code-editor/provider";
 
 const errStyle = {
   color: "red",

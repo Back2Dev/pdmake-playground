@@ -5,7 +5,7 @@ import EditorContext from "../components/code-editor/provider";
 
 const Settings = () => {
   const { darktheme, setDarkTheme } = React.useContext(EditorContext);
-  const { editor, setEditor } = React.useContext(EditorContext);
+  const { cmeditor, setCmeditor } = React.useContext(EditorContext);
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const handleToggle = () => {
@@ -33,11 +33,10 @@ const Settings = () => {
     prevOpen.current = open;
   }, [open]);
   const toggleEditor = () => {
-    setEditor(!editor);
+    setCmeditor(!cmeditor);
   };
   const toggleTheme = () => {
     setDarkTheme(!darktheme);
-    console.log("dark theme, ", darktheme)
   };
   return (
     <>
@@ -88,7 +87,7 @@ const Settings = () => {
                     </MenuItem>
                     <MenuItem >
                       <FormControlLabel
-                        control={<Switch checked={editor} />}
+                        control={<Switch checked={cmeditor} />}
                         onChange={toggleEditor}
                         label="Use Code Mirror"
                       />
