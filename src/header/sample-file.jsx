@@ -25,7 +25,7 @@ const SampleFiles = (props) => {
     MARGIN: margin,
     IMAGES: images,
   };
-  const { setCode, setDirty, setFilename } = React.useContext(EditorContext);
+  const { setCode, setFilename } = React.useContext(EditorContext);
   const [loadingstate, setLoadingState] = React.useState(false);
   const loading = () => {
     setLoadingState(true);
@@ -37,7 +37,6 @@ const SampleFiles = (props) => {
     console.log(`Loading ${e.target.value}`);
     setFilename(e.target.value);
     setCode(samples[e.target.value]);
-    setDirty(true);
     loading();
   };
   return (

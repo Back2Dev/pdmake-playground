@@ -11,7 +11,6 @@ function editorReducer(state, action) {
       return {
         ...state,
         code: payload,
-        dirty: true,
       };
     case "setFilename":
       return {
@@ -27,11 +26,6 @@ function editorReducer(state, action) {
       return {
         ...state,
         cmeditor: payload,
-      };
-    case "setDirty":
-      return {
-        ...state,
-        dirty: payload,
       };
     case "setErr":
       return {
@@ -50,7 +44,6 @@ export const EditorProvider = ({ children, source }) => {
     filename: "New File",
     darktheme: false,
     cmeditor: true,
-    dirty: false,
     err: source || ""
   });
   const setCode = (data) => {
@@ -65,9 +58,6 @@ export const EditorProvider = ({ children, source }) => {
   const setCmeditor = (data) => {
     dispatch({ type: "setCmeditor", payload: data });
   };
-  const setDirty = (data) => {
-    dispatch({ type: "setDirty", payload: data });
-  };
   const setErr = (data) => {
     dispatch({ type: "setErr", payload: data });
   }
@@ -79,7 +69,6 @@ export const EditorProvider = ({ children, source }) => {
         setFilename,
         setCmeditor,
         setDarkTheme,
-        setDirty,
         setErr
       }}
     >

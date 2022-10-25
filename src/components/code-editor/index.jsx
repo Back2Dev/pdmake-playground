@@ -18,7 +18,7 @@ import * as pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const Playground = () => {
-  const { cmeditor, err, setErr, code, setCode, darktheme, setDirty, } = React.useContext(EditorContext);
+  const { cmeditor, err, setErr, code, setCode, darktheme } = React.useContext(EditorContext);
   const editor = useRef();
   const view = useRef();
   const taRef = useRef(null);
@@ -109,7 +109,6 @@ const Playground = () => {
         const targetElement = document.getElementById("pdfView");
         targetElement.src = dataUrl;
         setErr("");
-        setDirty(false);
       });
     } catch (e) {
       console.log("error message: ", e);
