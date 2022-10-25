@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react";
 import EditorContext from "./provider";
-import { FormGroup, Button } from '@mui/material';
+import { FormGroup, Button } from "@mui/material";
 import prettier from "prettier/standalone";
 import babelParser from "prettier/parser-babel";
 
@@ -26,13 +26,13 @@ const FormatCode = () => {
           onClick={formatCode}
           data-cy="format"
           variant="outlined"
-          style={{ margin: "0px", padding: "0px", height: "3vh" }}
+          style={{ margin: "0px", padding: "0px", height: "20px" }}
         >
           Format
         </Button>
       </FormGroup>
     </>
-  )
-}
+  );
+};
 
-export default FormatCode
+export default FormatCode;

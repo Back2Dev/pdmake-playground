@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
-import CodeEditor from './code-editor';
-import Preview from './preview';
-import EditorContext from './provider';
+import React, { useEffect } from "react";
+import CodeEditor from "./code-editor";
+import Preview from "./preview";
+import EditorContext from "./provider";
 import Split from "react-split";
 import { Box, Grid } from "@mui/material";
 import pdfMake from "pdfmake/build/pdfmake";
@@ -9,7 +9,7 @@ import * as pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const Playground = () => {
-  const { code, setErr, setDirty } = React.useContext(EditorContext)
+  const { code, setErr, setDirty } = React.useContext(EditorContext);
   let dd = {};
   const makePdf = () => {
     try {
@@ -20,7 +20,7 @@ const Playground = () => {
         const targetElement = document.getElementById("pdfView");
         targetElement.src = dataUrl;
         setErr("");
-        setDirty(false)
+        setDirty(false);
       });
     } catch (e) {
       console.log("error message: ", e);
@@ -37,7 +37,7 @@ const Playground = () => {
   //   return () => clearInterval(interval);
   // }, []);
   useEffect(() => {
-    makePdf()
+    makePdf();
   }, [code]);
   return (
     <>
@@ -56,7 +56,7 @@ const Playground = () => {
         </Box>
       </Grid>
     </>
-  )
-}
+  );
+};
 
-export default Playground
+export default Playground;
