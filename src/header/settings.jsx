@@ -37,6 +37,7 @@ const Settings = () => {
   };
   const toggleTheme = () => {
     setDarkTheme(!darktheme);
+    console.log("dark theme, ", darktheme)
   };
   return (
     <>

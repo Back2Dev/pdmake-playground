@@ -11,8 +11,8 @@ import { lintKeymap, } from "@codemirror/lint";
 export const Editor = ({ onChange }) => {
 
   const editor = useRef();
-
   const view = useRef();
+
   const { darktheme, code } = React.useContext(EditorContext);
 
   let myTheme = EditorView.theme({
@@ -59,15 +59,18 @@ export const Editor = ({ onChange }) => {
     return () => {
       view.current.destroy();
     };
-  }, []);
+  }, [darktheme]);
 
   useEffect(() => {
     if (view.current && view.current.state.doc.toString() !== code) {
+      console.log("updated data")
       view.current.dispatch({
         changes: { from: 0, to: view.current.state.doc.length, insert: code }
       });
     }
+
   }, [code])
+
 
   return <div ref={editor}></div>;
 }

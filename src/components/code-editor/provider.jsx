@@ -48,7 +48,7 @@ export const EditorProvider = ({ children, source }) => {
   const [state, dispatch] = React.useReducer(editorReducer, {
     code: source || 'dd = {content: "Hello "}',
     filename: "New File",
-    darktheme: true,
+    darktheme: false,
     editor: true,
     dirty: false,
     err: source || ""
