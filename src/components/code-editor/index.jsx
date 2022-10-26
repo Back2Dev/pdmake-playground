@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback } from "react";
+import React, { useRef, useEffect, useCallback, useState } from "react";
 import EditorContext from "./provider";
 import Split from "react-split";
 import { Box, Grid, FormGroup, Button } from "@mui/material";
@@ -16,14 +16,46 @@ import { lintKeymap } from "@codemirror/lint";
 import pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
-import debounce from 'lodash.debounce';
+
+let myTheme = EditorView.theme(
+  {
+    "&": {
+      color: "#034",
+      backgroundColor: "white",
+    },
+    ".cm-content": {
+      caretColor: "#0e9",
+    },
+    "&.cm-focused .cm-cursor": {
+      borderLeftColor: "#0e9",
+    },
+    "&.cm-focused .cm-selectionBackground, ::selection": {
+      backgroundColor: "#074",
+    },
+    ".cm-gutters": {
+      backgroundColor: "#045",
+      color: "#ddd",
+      border: "none",
+    },
+  },
+  { dark: true }
+);
 
 const Playground = () => {
   const { cmeditor, err, setErr, code, setCode, darktheme } =
     React.useContext(EditorContext);
   const editor = useRef();
   const view = useRef();
-  const taRef = useRef(null);
+
+  const [inputValue, setInputValue] = useState(code);
+  const debouncedInputValue = useDebounce(inputValue, 1000);
+
+  useEffect(() => {
+    if (debouncedInputValue) {
+      setCode(inputValue);
+    }
+  }, [debouncedInputValue]);
+
   const errStyle = {
     color: "red",
     backgroundColor: "blanchedalmond",
@@ -31,32 +63,8 @@ const Playground = () => {
     height: "fit-content",
   };
 
-  let myTheme = EditorView.theme(
-    {
-      "&": {
-        color: "#034",
-        backgroundColor: "white",
-      },
-      ".cm-content": {
-        caretColor: "#0e9",
-      },
-      "&.cm-focused .cm-cursor": {
-        borderLeftColor: "#0e9",
-      },
-      "&.cm-focused .cm-selectionBackground, ::selection": {
-        backgroundColor: "#074",
-      },
-      ".cm-gutters": {
-        backgroundColor: "#045",
-        color: "#ddd",
-        border: "none",
-      },
-    },
-    { dark: true }
-  );
-
   const onUpdate = EditorView.updateListener.of(({ state }) => {
-    debouncedOnChange({ target: { value: state.doc.toString() } });
+    onChange({ target: { value: state.doc.toString() } });
   });
 
   const theme = darktheme ? oneDarkTheme : myTheme;
@@ -118,17 +126,15 @@ const Playground = () => {
     }
   };
 
-  const onChange = event => {
-    console.log("onChange: ", event.target.value)
-    setCode(event.target.value);
+  const onChange = (event) => {
+    setInputValue(event.target.value);
   };
-  const debouncedOnChange = useCallback(
-    debounce(onChange, 1000)
-    , []);
 
   useEffect(() => {
     makePdf();
   }, [code]);
+
+  console.log(code);
 
   return (
     <>
@@ -137,20 +143,19 @@ const Playground = () => {
           <Split className="split">
             <Grid item>
               <Box sx={{ bgcolor: "#2a313e", height: "100%", color: "#ffffff" }}>
-                {cmeditor && (
-                  <div ref={editor} onChange={debouncedOnChange}></div>
-                )}
+                {cmeditor && <div ref={editor} onChange={onChange}></div>}
                 {false && <div className="cm-editor" />}
                 {!cmeditor && (
                   <textarea
                     className="text-editor"
-                    ref={taRef}
                     id="textarea"
                     name="textarea"
                     data-cy="typeinarea"
                     style={{ width: "100%" }}
-                    value={code}
-                    onChange={onChange}
+                    value={inputValue}
+                    onChange={({ target: { value } }) => {
+                      setInputValue(value);
+                    }}
                   >
                     {code}
                   </textarea>
@@ -162,8 +167,8 @@ const Playground = () => {
                       err
                         ? errStyle
                         : {
-                          display: "none",
-                        }
+                            display: "none",
+                          }
                     }
                   >
                     {err}
@@ -197,3 +202,17 @@ const Playground = () => {
 };
 
 export default Playground;
+
+function useDebounce(value, delay) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+  return debouncedValue;
+}
