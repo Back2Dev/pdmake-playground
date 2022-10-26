@@ -27,7 +27,6 @@
     "@mui/material": "^5.10.7",
     "@react-icons/all-files": "^4.1.0",
     "codemirror": "^6.0.1",
-    "lodash.debounce": "^4.0.8",
     "pdf-lib": "^1.17.1",
     "pdfmake": "^0.2.5",
     "prettier": "^2.1.2",
