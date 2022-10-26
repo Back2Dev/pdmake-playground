@@ -29,17 +29,9 @@ h1 {
 /* Code-Editor Style */
 .cm-editor {
   height: calc(100vh - 121px);
-  border-top: 3.75rem solid #323639;
-  border-right: 0.25rem solid #323639;
-  border-left: 0.25rem solid #323639;
-  border-bottom: 0.25rem solid #323639;
 }
 .text-editor {
-  height: calc(100vh - 194px);
-  border-top: 3.75rem solid #323639;
-  border-right: 0.25rem solid #323639;
-  border-left: 0.25rem solid #323639;
-  border-bottom: 0.25rem solid #323639;
+  height: calc(100vh - 133px);
 }
 
 .split {
