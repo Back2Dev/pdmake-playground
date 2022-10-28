@@ -11,7 +11,6 @@ function editorReducer(state, action) {
       return {
         ...state,
         code: payload,
-        dirty: true,
       };
     case "setFilename":
       return {
@@ -23,15 +22,15 @@ function editorReducer(state, action) {
         ...state,
         darktheme: payload,
       };
-    case "setEditor":
+    case "setCmeditor":
       return {
         ...state,
-        editor: payload,
+        cmeditor: payload,
       };
-    case "setDirty":
+    case "setErr":
       return {
         ...state,
-        dirty: payload,
+        err: payload,
       };
     default:
       return state;
@@ -43,9 +42,9 @@ export const EditorProvider = ({ children, source }) => {
   const [state, dispatch] = React.useReducer(editorReducer, {
     code: source || 'dd = {content: "Hello "}',
     filename: "New File",
-    darktheme: true,
-    editor: true,
-    dirty: false,
+    darktheme: false,
+    cmeditor: true,
+    err: source || "",
   });
   const setCode = (data) => {
     dispatch({ type: "setCode", payload: data });
@@ -56,22 +55,21 @@ export const EditorProvider = ({ children, source }) => {
   const setDarkTheme = (data) => {
     dispatch({ type: "setDarkTheme", payload: data });
   };
-  const setEditor = (data) => {
-    dispatch({ type: "setEditor", payload: data });
+  const setCmeditor = (data) => {
+    dispatch({ type: "setCmeditor", payload: data });
   };
-  const setDirty = (data) => {
-    dispatch({ type: "setDirty", payload: data });
+  const setErr = (data) => {
+    dispatch({ type: "setErr", payload: data });
   };
-
   return (
     <EditorContext.Provider
       value={{
         ...state,
         setCode,
         setFilename,
-        setEditor,
+        setCmeditor,
         setDarkTheme,
-        setDirty,
+        setErr,
       }}
     >
       {children}

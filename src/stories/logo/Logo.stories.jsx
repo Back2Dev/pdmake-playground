@@ -1,6 +1,6 @@
 import React from "react";
-import Logo from "../logo/logo";
-import "../logo/logo.css";
+import Logo from "./logo";
+import "./logo.css";
 
 export default {
   title: "pdmake/Logo",

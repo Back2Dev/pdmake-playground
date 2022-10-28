@@ -1,6 +1,6 @@
 import React from "react";
-import Navbar from "../navbar/navbar";
-import "../navbar/navbar.css";
+import Navbar from "./navbar";
+import "./navbar.css";
 
 export default {
   title: "pdmake/Navbar",

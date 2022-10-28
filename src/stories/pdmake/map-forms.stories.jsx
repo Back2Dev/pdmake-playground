@@ -1,7 +1,7 @@
 import React from "react";
-import CodeEditor from "../../components/code-editor";
-import { EditorProvider } from "../../components/provider";
-import '../../index.css';
+import Playground from "../../components/code-editor/index"
+import { EditorProvider } from "../../components/code-editor/provider";
+import '../../components/code-editor/index.css';
 import Q1 from "./map-forms/q1"
 import Q2 from "./map-forms/q2"
 import Q4 from "./map-forms/q4"
@@ -14,7 +14,7 @@ import Q18 from "./map-forms/q18"
 
 export default {
   title: "pdmake/MAP-Forms",
-  component: CodeEditor,
+  component: Playground,
 };
 const data = {
   q1: Q1,
@@ -30,7 +30,7 @@ const data = {
 const Template = (args) => {
   return (
     <EditorProvider {...args} >
-      <CodeEditor />
+      <Playground />
     </EditorProvider>
   )
 }

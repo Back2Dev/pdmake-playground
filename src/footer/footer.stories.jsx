@@ -1,5 +1,6 @@
 import React from "react";
-import Footer from "../../components/footer";
+import Footer from "./footer";
+import '../components/code-editor/index.css';
 
 export default {
   title: "pdmake/Footer",

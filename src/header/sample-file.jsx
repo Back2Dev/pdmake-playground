@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, MenuItem } from "@mui/material";
-import EditorContext from "./provider";
+import EditorContext from "../components/code-editor/provider";
 
 // import sample files
 import basics from "./sample-files/basics";
@@ -25,26 +25,20 @@ const SampleFiles = (props) => {
     MARGIN: margin,
     IMAGES: images,
   };
-  const { code, setCode, setDirty } = React.useContext(EditorContext);
-  const { filename, setFilename } = React.useContext(EditorContext);
-
+  const { setCode, setFilename } = React.useContext(EditorContext);
   const [loadingstate, setLoadingState] = React.useState(false);
-
   const loading = () => {
     setLoadingState(true);
     setTimeout(() => {
       setLoadingState(false);
     }, 0);
   };
-
   const openDoc = (e) => {
     console.log(`Loading ${e.target.value}`);
     setFilename(e.target.value);
     setCode(samples[e.target.value]);
-    setDirty(true);
     loading();
   };
-
   return (
     <>
       {Object.keys(samples).map((sample) => {
@@ -52,7 +46,7 @@ const SampleFiles = (props) => {
           <MenuItem
             key={sample}
             onClick={props.handleCloseNavMenu}
-            style={{ minHeight: "5vh", maxHeight: "5vh" }}
+            style={{ minHeight: "48px", maxHeight: "48px" }}
           >
             <Button
               key={sample}
