@@ -1,5 +1,7 @@
 # pdmake-playground
 
+A Small project, which is a React port of the pdfmake playground
+
 ## Description:
 - PDMake - playground is an app-component that allows the user to view while creating pdf flies. It is dependent on PDFMake.
 
@@ -22,3 +24,4 @@
   ```
   npm run storybook
   ```
+
